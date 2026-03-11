@@ -14,9 +14,6 @@ async function iniciarQuiz(qtd) {
     perguntas = await fetch("data/8_perguntas.json").then(r => r.json())
     votosDeputados = await fetch("data/9_votos_deputados.json").then(r => r.json())
 
-    console.log("Perguntas carregadas:", perguntas)
-    console.log("Votos deputados carregados:", votosDeputados)
-
     perguntas = embaralhar(perguntas)
     perguntas = perguntas.slice(0, totalPerguntas)
     mostrarPergunta()
@@ -30,91 +27,52 @@ function pegarIdPergunta(p) {
     return p.votacao_id || p.id || p.votacao
 }
 
-// --- CORREÇÃO 1: FUNÇÃO PARA NORMALIZAR TEXTO ---
+// Normalização robusta para evitar erros de comparação
 function normalizar(v) {
     if (!v) return "";
     return v.toString()
-        .toLowerCase() // Transforma tudo em minúsculo
-        .trim()        // Remove espaços antes e depois
-        .normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Remove acentos (Não -> nao)
-}
-
-function mudarResumo(tipo) {
-    tipoResumo = tipo
-    mostrarPergunta()
+        .toLowerCase()
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, ""); 
 }
 
 function mostrarPergunta() {
     document.getElementById("placar").style.display = "none"
-
-    // restaurar botões
     document.querySelector(".voto-sim").onclick = () => responder("Sim")
     document.querySelector(".voto-nao").onclick = () => responder("Não")
     document.querySelector(".voto-abst").onclick = () => responder("Abstenção")
 
-    document.querySelectorAll(".opcoes button").forEach(btn => {
-        btn.classList.remove("selecionado")
-    })
-
-    document.getElementById("placar-sim").classList.remove("placar-destaque")
-    document.getElementById("placar-nao").classList.remove("placar-destaque")
-    document.getElementById("placar-abst").classList.remove("placar-destaque")
+    document.querySelectorAll(".opcoes button").forEach(btn => btn.classList.remove("selecionado"))
 
     let p = perguntas[indicePergunta]
     document.getElementById("contador").innerText = `Pergunta ${indicePergunta + 1} de ${totalPerguntas}`
-
+    
     let progresso = (indicePergunta / totalPerguntas) * 100
     document.getElementById("progresso").style.width = progresso + "%"
 
-    if (tipoResumo === "objetivo") {
-        document.getElementById("resumo").innerText = p.resumo_objetivo || p.resumo
-    } else {
-        document.getElementById("resumo").innerText = p.resumo_critico || p.resumo
-    }
+    document.getElementById("resumo").innerText = (tipoResumo === "objetivo") ? (p.resumo_objetivo || p.resumo) : (p.resumo_critico || p.resumo);
 
     let frases = p.contexto.split(". ")
     let html = ""
-    frases.forEach(f => {
-        if (f.trim() !== "") {
-            html += `<p>${f.trim()}.</p>`
-        }
-    })
+    frases.forEach(f => { if (f.trim() !== "") html += `<p>${f.trim()}.</p>` })
     document.getElementById("contexto").innerHTML = html
 
     let total = p.sim + p.nao + p.abst
-    let percSim = Math.round((p.sim / total) * 100)
-    let percNao = Math.round((p.nao / total) * 100)
-    let percAbst = Math.round((p.abst / total) * 100)
-
-    document.getElementById("placar-sim").innerText = `A favor: ${percSim}%`
-    document.getElementById("placar-nao").innerText = `Contra: ${percNao}%`
-    document.getElementById("placar-abst").innerText = `Abstenção: ${percAbst}%`
+    document.getElementById("placar-sim").innerText = `A favor: ${Math.round((p.sim/total)*100)}%`
+    document.getElementById("placar-nao").innerText = `Contra: ${Math.round((p.nao/total)*100)}%`
+    document.getElementById("placar-abst").innerText = `Abstenção: ${Math.round((p.abst/total)*100)}%`
 }
 
 function responder(voto) {
     let p = perguntas[indicePergunta]
     let id = pegarIdPergunta(p)
-
     respostasUsuario[id] = voto
-
-    // bloquear botões
-    document.querySelectorAll(".opcoes button").forEach(btn => {
-        btn.onclick = null
-    })
-
-    // destacar botão escolhido
-    if (voto === "Sim") {
-        document.querySelector(".voto-sim").classList.add("selecionado")
-        document.getElementById("placar-sim").classList.add("placar-destaque")
-    }
-    if (voto === "Não") {
-        document.querySelector(".voto-nao").classList.add("selecionado")
-        document.getElementById("placar-nao").classList.add("placar-destaque")
-    }
-    if (voto === "Abstenção") {
-        document.querySelector(".voto-abst").classList.add("selecionado")
-        document.getElementById("placar-abst").classList.add("placar-destaque")
-    }
+    
+    document.querySelectorAll(".opcoes button").forEach(btn => btn.onclick = null)
+    if (voto === "Sim") document.querySelector(".voto-sim").classList.add("selecionado")
+    if (voto === "Não") document.querySelector(".voto-nao").classList.add("selecionado")
+    if (voto === "Abstenção") document.querySelector(".voto-abst").classList.add("selecionado")
 
     document.getElementById("placar").style.display = "block"
 }
@@ -134,21 +92,23 @@ function mostrarResultado() {
 
     let ranking = []
 
-    for (let dep in votosDeputados) {
-        let deputado = votosDeputados[dep]
-        let votos = deputado.votos
+    for (let nomeDep in votosDeputados) {
+        let deputadoObj = votosDeputados[nomeDep]
+        let listaVotos = deputadoObj.votos
         let iguais = 0
-        let total = 0
+        let totalValido = 0
 
-        for (let votacaoId in respostasUsuario) {
-            if (votos[votacaoId]) {
-                // --- CORREÇÃO 2: USAR NORMALIZAR NA COMPARAÇÃO ---
-                let vDep = normalizar(votos[votacaoId])
-                let vUser = normalizar(respostasUsuario[votacaoId])
+        for (let idVotacao in respostasUsuario) {
+            let votoDoDeputado = listaVotos[idVotacao]
+            let votoDoUsuario = respostasUsuario[idVotacao]
 
-                // Consideramos apenas votos válidos para o total
+            if (votoDoDeputado) {
+                let vDep = normalizar(votoDoDeputado)
+                let vUser = normalizar(votoDoUsuario)
+
+                // SÓ conta se o deputado votou algo reconhecível
                 if (vDep === "sim" || vDep === "nao" || vDep === "abstencao") {
-                    total++
+                    totalValido++
                     if (vDep === vUser) {
                         iguais++
                     }
@@ -156,36 +116,33 @@ function mostrarResultado() {
             }
         }
 
-        if (total > 0) {
-            let score = Math.round((iguais / total) * 100)
+        if (totalValido > 0) {
+            let score = Math.round((iguais / totalValido) * 100)
             ranking.push({
-                nome: dep,
-                partido: deputado.partido,
-                estado: deputado.estado,
+                nome: nomeDep,
+                partido: deputadoObj.partido || "S/P",
+                estado: deputadoObj.estado || "UF",
                 score: score,
-                votosContados: total // Para desempate
+                total: totalValido
             })
         }
     }
 
-    // --- CORREÇÃO 3: MELHORAR O RANKING (CRITÉRIO DE DESEMPATE) ---
-    // Se empatar no %, ganha quem participou de mais votações
-    ranking.sort((a, b) => b.score - a.score || b.votosContados - a.votosContados)
+    // Ordena por score e usa o total de votos como desempate
+    ranking.sort((a, b) => b.score - a.score || b.total - a.total)
 
     let top = ranking.slice(0, 5)
     let lista = document.getElementById("ranking-deputados")
     lista.innerHTML = ""
-
-    if (top.length === 0) {
-        lista.innerHTML = "<li>Nenhum deputado teve votos comparáveis.</li>"
-        return
-    }
 
     top.forEach(d => {
         let li = document.createElement("li")
         li.innerText = `${d.nome} (${d.partido}-${d.estado}) — ${d.score}%`
         lista.appendChild(li)
     })
+    
+    // LOG DE SEGURANÇA: Se continuar dando 100%, olhe isso no F12
+    console.log("Amostra do Ranking:", ranking.slice(0, 3));
 }
 
 function reiniciarQuiz() {
