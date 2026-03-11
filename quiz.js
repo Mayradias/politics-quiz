@@ -39,14 +39,6 @@ return array.sort(()=>Math.random()-0.5)
 
 
 
-function pegarIdPergunta(p){
-
-return p.votacao_id || p.id || p.votacao
-
-}
-
-
-
 function mudarResumo(tipo){
 
 tipoResumo = tipo
@@ -59,6 +51,8 @@ mostrarPergunta()
 function mostrarPergunta(){
 
 document.getElementById("placar").style.display="none"
+
+resetarBotoes()
 
 let p = perguntas[indicePergunta]
 
@@ -106,9 +100,19 @@ let percSim = Math.round((p.sim/total)*100)
 let percNao = Math.round((p.nao/total)*100)
 let percAbst = Math.round((p.abst/total)*100)
 
-document.getElementById("placar-sim").innerText = `A favor: ${percSim}%`
-document.getElementById("placar-nao").innerText = `Contra: ${percNao}%`
-document.getElementById("placar-abst").innerText = `Abstenção: ${percAbst}%`
+document.getElementById("placar-sim").innerText = `👍 A favor: ${percSim}%`
+document.getElementById("placar-nao").innerText = `👎 Contra: ${percNao}%`
+document.getElementById("placar-abst").innerText = `🤷 Abstenção: ${percAbst}%`
+
+}
+
+
+
+function resetarBotoes(){
+
+document.getElementById("botao-sim").classList.remove("selecionado")
+document.getElementById("botao-nao").classList.remove("selecionado")
+document.getElementById("botao-abst").classList.remove("selecionado")
 
 }
 
@@ -118,18 +122,30 @@ function responder(voto){
 
 let p = perguntas[indicePergunta]
 
-let id = pegarIdPergunta(p)
+respostasUsuario[p.votacao_id]=voto
 
-if(!id){
+resetarBotoes()
 
-console.error("Pergunta sem ID:", p)
-return
+if(voto==="Sim"){
+
+document.getElementById("botao-sim").classList.add("selecionado")
+document.getElementById("placar-sim").classList.add("placar-destaque")
 
 }
 
-respostasUsuario[id]=voto
+if(voto==="Não"){
 
-console.log("Resposta registrada:", id, voto)
+document.getElementById("botao-nao").classList.add("selecionado")
+document.getElementById("placar-nao").classList.add("placar-destaque")
+
+}
+
+if(voto==="Abstenção"){
+
+document.getElementById("botao-abst").classList.add("selecionado")
+document.getElementById("placar-abst").classList.add("placar-destaque")
+
+}
 
 document.getElementById("placar").style.display="block"
 
