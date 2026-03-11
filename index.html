@@ -63,11 +63,14 @@ e descubra quais parlamentares mais concordam com você
 <div id="progresso"></div>
 </div>
 
+<div class="tipo-resumo">
 
-<div class="resumo-box">
-<div id="resumo"></div>
+<button onclick="mudarResumo('objetivo')">Resumo objetivo</button>
+<button onclick="mudarResumo('critico')">Resumo crítico</button>
+
 </div>
 
+<div class="resumo-box" id="resumo"></div>
 
 <div class="contexto-box" id="contexto"></div>
 
@@ -95,6 +98,7 @@ e descubra quais parlamentares mais concordam com você
 
 <div id="placar-sim"></div>
 <div id="placar-nao"></div>
+<div id="placar-abst"></div>
 
 <button id="proxima" onclick="proximaPergunta()">➡ Próxima</button>
 
@@ -110,23 +114,9 @@ e descubra quais parlamentares mais concordam com você
 
 <div class="resultado-card">
 
-<h2>Resultado do quiz</h2>
-
-<div class="ranking">
-
-<h3>Deputados mais próximos de você</h3>
+<h2>Deputados que mais votaram como você</h2>
 
 <ol id="ranking-deputados"></ol>
-
-</div>
-
-<div class="ranking">
-
-<h3>Partidos mais próximos de você</h3>
-
-<ol id="ranking-partidos"></ol>
-
-</div>
 
 <button class="botao-reiniciar" onclick="reiniciarQuiz()">
 Refazer quiz
@@ -135,6 +125,7 @@ Refazer quiz
 </div>
 
 </section>
+
 
 </div>
 
