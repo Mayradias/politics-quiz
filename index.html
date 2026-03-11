@@ -1,36 +1,143 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
 
 <meta charset="UTF-8">
-<title>Quiz Político</title>
+<title>Quais deputados votam como você?</title>
 
 <link rel="stylesheet" href="style.css">
 
 </head>
 
+
 <body>
 
-<h1>Quiz Político</h1>
 
-<div id="quiz">
+<header>
 
-    <div id="pergunta"></div>
+<h1>Quais deputados votam como você?</h1>
 
-    <div id="contexto"></div>
+<p class="subtitulo">
+Responda votações reais da Câmara dos Deputados
+e descubra quais parlamentares mais concordam com você
+</p>
 
-    <div id="opcoes">
+</header>
 
-        <button onclick="responder('Sim')">👍 A favor</button>
-        <button onclick="responder('Não')">👎 Contra</button>
-        <button onclick="responder('Abstenção')">🤷 Indiferente</button>
 
-    </div>
+<!-- escolha do quiz -->
+
+<div id="menu-quiz">
+
+<h2>Escolha o tamanho do quiz</h2>
+
+<button onclick="iniciarQuiz(5)">Quiz rápido – 5 perguntas</button>
+
+<button onclick="iniciarQuiz(10)">Quiz médio – 10 perguntas</button>
+
+<button onclick="iniciarQuiz(15)">Quiz completo – 15 perguntas</button>
 
 </div>
 
-<div id="resultado"></div>
+
+
+<!-- área do quiz -->
+
+<div id="quiz" style="display:none;">
+
+
+<div id="topo-pergunta">
+
+<span id="contador"></span>
+
+<div id="barra-progresso">
+<div id="progresso"></div>
+</div>
+
+</div>
+
+
+<!-- alternar tipo de resumo -->
+
+<div id="tipo-resumo">
+
+Resumo:
+<button onclick="mudarResumo('objetivo')">Objetivo</button>
+<button onclick="mudarResumo('critico')">Crítico</button>
+
+</div>
+
+
+<!-- resumo -->
+
+<div id="resumo"></div>
+
+
+<!-- contexto -->
+
+<div id="contexto"></div>
+
+
+
+<!-- opções -->
+
+<div id="opcoes">
+
+<button onclick="responder('Sim')">👍 A favor</button>
+
+<button onclick="responder('Não')">👎 Contra</button>
+
+<button onclick="responder('Abstenção')">🤷 Indiferente</button>
+
+</div>
+
+
+
+<!-- resultado da votação -->
+
+<div id="placar">
+
+<p>Resultado da votação na Câmara</p>
+
+<div id="placar-sim"></div>
+<div id="placar-nao"></div>
+
+</div>
+
+
+</div>
+
+
+
+<!-- resultado final -->
+
+<div id="resultado" style="display:none;">
+
+
+<h2>Resultado</h2>
+
+
+<h3>Deputados mais próximos de você</h3>
+
+<ol id="ranking-deputados"></ol>
+
+
+<h3>Partidos mais próximos de você</h3>
+
+<ol id="ranking-partidos"></ol>
+
+
+<button onclick="reiniciarQuiz()">Fazer outro quiz</button>
+
+
+</div>
+
+
 
 <script src="quiz.js"></script>
 
+
 </body>
+
+</html>

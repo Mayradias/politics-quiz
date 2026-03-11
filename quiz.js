@@ -1,67 +1,99 @@
 let perguntas = []
 let votosDeputados = {}
 
+let indicePergunta = 0
+let totalPerguntas = 10
+
 let respostasUsuario = {}
 
-let perguntaAtual = 0
+async function iniciarQuiz(qtd) {
 
-async function carregarDados(){
+    totalPerguntas = qtd
 
-    perguntas = await fetch("data/perguntas.json").then(r=>r.json())
+    document.getElementById("menu-quiz").style.display = "none"
+    document.getElementById("quiz").style.display = "block"
 
-    votosDeputados = await fetch("data/votos_deputados.json").then(r=>r.json())
+    perguntas = await fetch("data/8_perguntas.json").then(r => r.json())
+    votosDeputados = await fetch("data/9_votos_deputados.json").then(r => r.json())
+
+    perguntas = perguntas.slice(0, totalPerguntas)
 
     mostrarPergunta()
 
 }
 
-function mostrarPergunta(){
 
-    if(perguntaAtual >= perguntas.length){
+function mostrarPergunta() {
 
-        calcularResultado()
+    let p = perguntas[indicePergunta]
 
-        return
-    }
+    document.getElementById("contador").innerText =
+        `Pergunta ${indicePergunta + 1} de ${totalPerguntas}`
 
-    let p = perguntas[perguntaAtual]
+    let progresso = ((indicePergunta) / totalPerguntas) * 100
+    document.getElementById("progresso").style.width = progresso + "%"
 
-    document.getElementById("pergunta").innerText = p.resumo
+    document.getElementById("resumo").innerText = p.resumo
 
     document.getElementById("contexto").innerText = p.contexto
 
+
+    let total = p.sim + p.nao
+
+    let percSim = Math.round((p.sim / total) * 100)
+    let percNao = Math.round((p.nao / total) * 100)
+
+    document.getElementById("placar-sim").innerText =
+        `A favor: ${percSim}%`
+
+    document.getElementById("placar-nao").innerText =
+        `Contra: ${percNao}%`
+
 }
 
-function responder(voto){
 
-    let p = perguntas[perguntaAtual]
+function responder(voto) {
 
-    respostasUsuario[p.id] = voto
+    let p = perguntas[indicePergunta]
 
-    perguntaAtual++
+    respostasUsuario[p.votacao_id] = voto
 
-    mostrarPergunta()
+    indicePergunta++
+
+    if (indicePergunta >= totalPerguntas) {
+
+        mostrarResultado()
+
+    } else {
+
+        mostrarPergunta()
+
+    }
 
 }
 
-function calcularResultado(){
+
+function mostrarResultado() {
+
+    document.getElementById("quiz").style.display = "none"
+    document.getElementById("resultado").style.display = "block"
 
     let ranking = []
 
-    for(let deputado in votosDeputados){
+    for (let dep in votosDeputados) {
 
-        let votos = votosDeputados[deputado].votos
+        let votos = votosDeputados[dep]
 
         let iguais = 0
         let total = 0
 
-        for(let id in respostasUsuario){
+        for (let votacao in respostasUsuario) {
 
-            if(votos[id]){
+            if (votos[votacao]) {
 
                 total++
 
-                if(votos[id] === respostasUsuario[id]){
+                if (votos[votacao] === respostasUsuario[votacao]) {
 
                     iguais++
 
@@ -71,12 +103,12 @@ function calcularResultado(){
 
         }
 
-        if(total > 0){
+        if (total > 0) {
 
-            let score = iguais / total
+            let score = Math.round((iguais / total) * 100)
 
             ranking.push({
-                deputado: deputado,
+                nome: dep,
                 score: score
             })
 
@@ -84,28 +116,33 @@ function calcularResultado(){
 
     }
 
-    ranking.sort((a,b)=>b.score-a.score)
+    ranking.sort((a, b) => b.score - a.score)
 
-    mostrarRanking(ranking)
+    let top = ranking.slice(0, 5)
 
-}
+    let lista = document.getElementById("ranking-deputados")
 
-function mostrarRanking(ranking){
+    lista.innerHTML = ""
 
-    let html = "<h2>Políticos mais compatíveis</h2>"
+    top.forEach(d => {
 
-    for(let i=0;i<5;i++){
+        let li = document.createElement("li")
 
-        let r = ranking[i]
+        li.innerText = `${d.nome} — ${d.score}%`
 
-        html += `<p>${i+1}. ${r.deputado} — ${(r.score*100).toFixed(1)}%</p>`
+        lista.appendChild(li)
 
-    }
-
-    document.getElementById("quiz").style.display="none"
-
-    document.getElementById("resultado").innerHTML = html
+    })
 
 }
 
-carregarDados()
+
+function reiniciarQuiz() {
+
+    indicePergunta = 0
+    respostasUsuario = {}
+
+    document.getElementById("resultado").style.display = "none"
+    document.getElementById("menu-quiz").style.display = "block"
+
+}
