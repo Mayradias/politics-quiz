@@ -12,12 +12,9 @@
 
 </head>
 
-
 <body>
 
-
 <div class="container">
-
 
 <header>
 
@@ -27,7 +24,6 @@ e descubra quais parlamentares mais concordam com você
 </h1>
 
 </header>
-
 
 
 <!-- MENU INICIAL -->
@@ -63,9 +59,7 @@ e descubra quais parlamentares mais concordam com você
 
 <section id="quiz" style="display:none;">
 
-
 <div class="quiz-card">
-
 
 <div class="topo-pergunta">
 
@@ -78,32 +72,14 @@ e descubra quais parlamentares mais concordam com você
 </div>
 
 
-
-<div class="tipo-resumo">
-
-Mostrar resumo:
-
-<button onclick="mudarResumo('objetivo')">Objetivo</button>
-<button onclick="mudarResumo('critico')">Crítico</button>
-
+<div class="contexto-box">
+<div id="contexto"></div>
 </div>
-
 
 
 <div class="resumo-box">
-
 <div id="resumo"></div>
-
 </div>
-
-
-
-<div class="contexto-box">
-
-<div id="contexto"></div>
-
-</div>
-
 
 
 <div class="opcoes">
@@ -123,8 +99,7 @@ Mostrar resumo:
 </div>
 
 
-
-<div class="placar">
+<div class="placar" id="placar" style="display:none;">
 
 <p>Resultado da votação na Câmara</p>
 
@@ -133,9 +108,7 @@ Mostrar resumo:
 
 </div>
 
-
 </div>
-
 
 </section>
 
@@ -145,11 +118,9 @@ Mostrar resumo:
 
 <section id="resultado" style="display:none;">
 
-
 <div class="resultado-card">
 
 <h2>Resultado do quiz</h2>
-
 
 <div class="ranking">
 
@@ -159,7 +130,6 @@ Mostrar resumo:
 
 </div>
 
-
 <div class="ranking">
 
 <h3>Partidos mais próximos de você</h3>
@@ -168,23 +138,17 @@ Mostrar resumo:
 
 </div>
 
-
 <button class="botao-reiniciar" onclick="reiniciarQuiz()">
 Refazer quiz
 </button>
 
-
 </div>
-
 
 </section>
 
-
 </div>
 
-
 <script src="quiz.js"></script>
-
 
 </body>
 </html>

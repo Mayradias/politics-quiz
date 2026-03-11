@@ -11,7 +11,7 @@ async function iniciarQuiz(qtd) {
     totalPerguntas = qtd
 
     document.getElementById("menu-quiz").style.display = "none"
-    document.getElementById("quiz").style.display = "block"
+    document.getElementById("quiz").style.display = "flex"
 
     perguntas = await fetch("data/8_perguntas.json").then(r => r.json())
     votosDeputados = await fetch("data/9_votos_deputados.json").then(r => r.json())
@@ -25,6 +25,8 @@ async function iniciarQuiz(qtd) {
 
 function mostrarPergunta() {
 
+    document.getElementById("placar").style.display = "none"
+
     let p = perguntas[indicePergunta]
 
     document.getElementById("contador").innerText =
@@ -34,9 +36,7 @@ function mostrarPergunta() {
     document.getElementById("progresso").style.width = progresso + "%"
 
     document.getElementById("resumo").innerText = p.resumo
-
     document.getElementById("contexto").innerText = p.contexto
-
 
     let total = p.sim + p.nao
 
@@ -58,17 +58,23 @@ function responder(voto) {
 
     respostasUsuario[p.votacao_id] = voto
 
-    indicePergunta++
+    document.getElementById("placar").style.display = "block"
 
-    if (indicePergunta >= totalPerguntas) {
+    setTimeout(() => {
 
-        mostrarResultado()
+        indicePergunta++
 
-    } else {
+        if (indicePergunta >= totalPerguntas) {
 
-        mostrarPergunta()
+            mostrarResultado()
 
-    }
+        } else {
+
+            mostrarPergunta()
+
+        }
+
+    }, 1200)
 
 }
 

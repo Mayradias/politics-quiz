@@ -20,8 +20,6 @@ text-align:center;
 
 
 
-/* TITULO */
-
 header{
 
 margin-top:60px;
@@ -38,15 +36,6 @@ font-weight:600;
 }
 
 
-
-/* MENU INICIAL */
-
-#menu-quiz h2{
-
-font-size:22px;
-margin-bottom:40px;
-
-}
 
 .quiz-opcoes{
 
@@ -87,7 +76,16 @@ box-shadow:0 8px 18px rgba(0,0,0,0.12);
 
 
 
-/* CARD DO QUIZ */
+#quiz{
+
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:60vh;
+
+}
+
+
 
 .quiz-card{
 
@@ -95,19 +93,10 @@ background:#ffffff;
 padding:35px;
 border-radius:14px;
 box-shadow:0 6px 20px rgba(0,0,0,0.08);
-text-align:center;
 
 }
 
 
-
-/* TOPO PERGUNTA */
-
-.topo-pergunta{
-
-margin-bottom:20px;
-
-}
 
 #contador{
 
@@ -136,42 +125,23 @@ width:0%;
 
 
 
-/* RESUMO */
+.contexto-box{
 
-.tipo-resumo{
-
-margin-bottom:15px;
-font-size:14px;
-
-}
-
-.tipo-resumo button{
-
-margin-left:10px;
-font-size:14px;
-padding:5px 10px;
+font-size:22px;
+font-weight:600;
+margin-bottom:20px;
 
 }
 
 .resumo-box{
 
-font-size:18px;
-font-weight:500;
-margin-bottom:20px;
-
-}
-
-.contexto-box{
-
-font-size:15px;
+font-size:16px;
 color:#555;
 margin-bottom:30px;
 
 }
 
 
-
-/* BOTOES DE VOTO */
 
 .opcoes{
 
@@ -220,8 +190,6 @@ transform:scale(1.05);
 
 
 
-/* RESULTADO DA VOTAÇÃO */
-
 .placar{
 
 margin-top:20px;
@@ -231,8 +199,6 @@ color:#555;
 }
 
 
-
-/* RESULTADO FINAL */
 
 .resultado-card{
 
@@ -249,12 +215,6 @@ margin-top:30px;
 
 }
 
-.ranking h3{
-
-margin-bottom:10px;
-
-}
-
 ol{
 
 padding-left:20px;
@@ -263,8 +223,6 @@ text-align:left;
 }
 
 
-
-/* BOTAO REINICIAR */
 
 .botao-reiniciar{
 
