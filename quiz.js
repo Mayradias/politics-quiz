@@ -136,22 +136,6 @@ mostrarPergunta()
 
 
 
-function normalizarVoto(v){
-
-if(!v) return null
-
-v = v.toLowerCase()
-
-if(v.includes("sim")) return "Sim"
-if(v.includes("não") || v.includes("nao")) return "Não"
-if(v.includes("absten")) return "Abstenção"
-
-return null
-
-}
-
-
-
 function mostrarResultado(){
 
 document.getElementById("quiz").style.display="none"
@@ -161,7 +145,9 @@ let ranking=[]
 
 for(let dep in votosDeputados){
 
-let votos=votosDeputados[dep]
+let deputado=votosDeputados[dep]
+
+let votos=deputado.votos
 
 let iguais=0
 let total=0
@@ -170,18 +156,11 @@ for(let votacao in respostasUsuario){
 
 if(votos[votacao]){
 
-let votoDep = normalizarVoto(votos[votacao])
-let votoUser = normalizarVoto(respostasUsuario[votacao])
-
-if(votoDep && votoUser){
-
 total++
 
-if(votoDep===votoUser){
+if(votos[votacao]===respostasUsuario[votacao]){
 
 iguais++
-
-}
 
 }
 
@@ -196,6 +175,8 @@ let score=Math.round((iguais/total)*100)
 ranking.push({
 
 nome:dep,
+partido:deputado.partido,
+estado:deputado.estado,
 score:score
 
 })
@@ -229,7 +210,7 @@ top.forEach(d=>{
 
 let li=document.createElement("li")
 
-li.innerText = `${d.nome} — ${d.score}%`
+li.innerText = `${d.nome} (${d.partido}-${d.estado}) — ${d.score}%`
 
 lista.appendChild(li)
 
