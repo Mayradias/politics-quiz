@@ -1,37 +1,286 @@
 body{
 
-font-family: Arial;
-max-width:800px;
-margin:auto;
-padding:20px;
+font-family: Arial, Helvetica, sans-serif;
+background:#f5f7fb;
+margin:0;
+padding:0;
+display:flex;
+justify-content:center;
 
 }
 
-#pergunta{
+.container{
+
+max-width:800px;
+width:100%;
+padding:40px 20px;
+text-align:center;
+
+}
+
+
+
+/* TITULO */
+
+header{
+
+margin-top:60px;
+margin-bottom:140px;
+
+}
+
+h1{
+
+font-size:30px;
+line-height:1.4;
+font-weight:600;
+
+}
+
+
+
+/* MENU INICIAL */
+
+#menu-quiz h2{
 
 font-size:22px;
-margin-bottom:15px;
+margin-bottom:40px;
 
 }
 
-#contexto{
+.quiz-opcoes{
 
-color:#555;
+display:flex;
+justify-content:center;
+gap:25px;
+flex-wrap:wrap;
+
+}
+
+.botao-quiz{
+
+font-size:18px;
+padding:20px 30px;
+border:none;
+border-radius:10px;
+background:#ffffff;
+box-shadow:0 4px 10px rgba(0,0,0,0.08);
+cursor:pointer;
+transition:all 0.2s ease;
+width:180px;
+
+}
+
+.botao-quiz span{
+
+font-size:14px;
+color:#666;
+
+}
+
+.botao-quiz:hover{
+
+transform:translateY(-3px);
+box-shadow:0 8px 18px rgba(0,0,0,0.12);
+
+}
+
+
+
+/* CARD DO QUIZ */
+
+.quiz-card{
+
+background:#ffffff;
+padding:35px;
+border-radius:14px;
+box-shadow:0 6px 20px rgba(0,0,0,0.08);
+text-align:center;
+
+}
+
+
+
+/* TOPO PERGUNTA */
+
+.topo-pergunta{
+
 margin-bottom:20px;
 
 }
 
-button{
+#contador{
+
+font-size:14px;
+color:#666;
+margin-bottom:10px;
+
+}
+
+.barra{
+
+height:8px;
+background:#e4e7ec;
+border-radius:6px;
+overflow:hidden;
+
+}
+
+#progresso{
+
+height:8px;
+background:#3b82f6;
+width:0%;
+
+}
+
+
+
+/* RESUMO */
+
+.tipo-resumo{
+
+margin-bottom:15px;
+font-size:14px;
+
+}
+
+.tipo-resumo button{
+
+margin-left:10px;
+font-size:14px;
+padding:5px 10px;
+
+}
+
+.resumo-box{
 
 font-size:18px;
-margin:10px;
-padding:10px 20px;
+font-weight:500;
+margin-bottom:20px;
+
+}
+
+.contexto-box{
+
+font-size:15px;
+color:#555;
+margin-bottom:30px;
+
+}
+
+
+
+/* BOTOES DE VOTO */
+
+.opcoes{
+
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+margin-bottom:25px;
+
+}
+
+.opcoes button{
+
+font-size:16px;
+padding:12px 22px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+transition:0.2s;
+
+}
+
+.voto-sim{
+
+background:#d1fae5;
+
+}
+
+.voto-nao{
+
+background:#fee2e2;
+
+}
+
+.voto-abst{
+
+background:#e5e7eb;
+
+}
+
+.opcoes button:hover{
+
+transform:scale(1.05);
+
+}
+
+
+
+/* RESULTADO DA VOTAÇÃO */
+
+.placar{
+
+margin-top:20px;
+font-size:14px;
+color:#555;
+
+}
+
+
+
+/* RESULTADO FINAL */
+
+.resultado-card{
+
+background:#ffffff;
+padding:35px;
+border-radius:14px;
+box-shadow:0 6px 20px rgba(0,0,0,0.08);
+
+}
+
+.ranking{
+
+margin-top:30px;
+
+}
+
+.ranking h3{
+
+margin-bottom:10px;
+
+}
+
+ol{
+
+padding-left:20px;
+text-align:left;
+
+}
+
+
+
+/* BOTAO REINICIAR */
+
+.botao-reiniciar{
+
+margin-top:30px;
+padding:12px 20px;
+font-size:16px;
+border:none;
+border-radius:8px;
+background:#3b82f6;
+color:white;
 cursor:pointer;
 
 }
 
-#resultado{
+.botao-reiniciar:hover{
 
-margin-top:40px;
+background:#2563eb;
 
 }
