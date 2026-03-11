@@ -52,7 +52,7 @@ function mostrarPergunta(){
 
 document.getElementById("placar").style.display="none"
 
-resetarBotoes()
+resetarDestaques()
 
 let p = perguntas[indicePergunta]
 
@@ -108,11 +108,15 @@ document.getElementById("placar-abst").innerText = `🤷 Abstenção: ${percAbst
 
 
 
-function resetarBotoes(){
+function resetarDestaques(){
 
 document.getElementById("botao-sim").classList.remove("selecionado")
 document.getElementById("botao-nao").classList.remove("selecionado")
 document.getElementById("botao-abst").classList.remove("selecionado")
+
+document.getElementById("placar-sim").classList.remove("placar-destaque")
+document.getElementById("placar-nao").classList.remove("placar-destaque")
+document.getElementById("placar-abst").classList.remove("placar-destaque")
 
 }
 
@@ -124,7 +128,9 @@ let p = perguntas[indicePergunta]
 
 respostasUsuario[p.votacao_id]=voto
 
-resetarBotoes()
+resetarDestaques()
+
+
 
 if(voto==="Sim"){
 
