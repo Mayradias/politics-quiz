@@ -112,17 +112,35 @@ e descubra quais parlamentares mais concordam com você
 
 <section id="resultado" style="display:none;">
 
-<div class="resultado-card">
+<div class="resultado-grid">
 
-<h2>Deputados que mais votaram como você</h2>
+<div class="resultado-coluna">
 
-<ol id="ranking-deputados"></ol>
+<h3>Partidos mais compatíveis</h3>
+<ol id="ranking-partidos-mais"></ol>
+
+<h3 style="margin-top:30px">Políticos mais compatíveis</h3>
+<ol id="ranking-deputados-mais"></ol>
+
+</div>
+
+
+<div class="resultado-coluna">
+
+<h3>Partidos menos compatíveis</h3>
+<ol id="ranking-partidos-menos"></ol>
+
+<h3 style="margin-top:30px">Políticos menos compatíveis</h3>
+<ol id="ranking-deputados-menos"></ol>
+
+</div>
+
+</div>
+
 
 <button class="botao-reiniciar" onclick="reiniciarQuiz()">
 Refazer quiz
 </button>
-
-</div>
 
 </section>
 
