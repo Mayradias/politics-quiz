@@ -37,8 +37,6 @@ font-weight:600;
 
 
 
-/* MENU */
-
 .quiz-opcoes{
 
 display:flex;
@@ -78,8 +76,6 @@ box-shadow:0 8px 18px rgba(0,0,0,0.12);
 
 
 
-/* QUIZ */
-
 #quiz{
 
 display:flex;
@@ -100,8 +96,6 @@ width:100%;
 }
 
 
-
-/* PERGUNTA */
 
 #contador{
 
@@ -131,8 +125,6 @@ width:0%;
 
 
 
-/* TITULO (RESUMO) */
-
 .resumo-box{
 
 font-size:16px;
@@ -143,19 +135,21 @@ margin-bottom:10px;
 
 
 
-/* SUBTITULO (CONTEXTO) */
-
 .contexto-box{
 
 font-size:22px;
 font-weight:600;
-margin-bottom:40px;
+margin-bottom:30px;
+
+}
+
+.contexto-box p{
+
+margin-bottom:12px;
 
 }
 
 
-
-/* BOTOES */
 
 .opcoes{
 
@@ -163,7 +157,7 @@ display:flex;
 justify-content:center;
 gap:20px;
 flex-wrap:wrap;
-margin-bottom:30px;
+margin-bottom:25px;
 
 }
 
@@ -204,8 +198,6 @@ transform:scale(1.05);
 
 
 
-/* PLACAR */
-
 .placar{
 
 margin-top:25px;
@@ -216,7 +208,20 @@ color:#555;
 
 
 
-/* RESULTADO */
+#proxima{
+
+margin-top:20px;
+padding:10px 18px;
+font-size:16px;
+border:none;
+border-radius:8px;
+background:#3b82f6;
+color:white;
+cursor:pointer;
+
+}
+
+
 
 .resultado-card{
 
@@ -252,11 +257,5 @@ border-radius:8px;
 background:#3b82f6;
 color:white;
 cursor:pointer;
-
-}
-
-.botao-reiniciar:hover{
-
-background:#2563eb;
 
 }

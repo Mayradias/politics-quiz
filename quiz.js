@@ -37,7 +37,22 @@ function mostrarPergunta() {
     document.getElementById("progresso").style.width = progresso + "%"
 
     document.getElementById("resumo").innerText = p.resumo
-    document.getElementById("contexto").innerText = p.contexto
+
+    let frases = p.contexto.split(". ")
+
+    let html = ""
+
+    frases.forEach(f => {
+
+        if (f.trim() !== "") {
+
+            html += `<p>${f.trim()}.</p>`
+
+        }
+
+    })
+
+    document.getElementById("contexto").innerHTML = html
 
     let total = p.sim + p.nao
 
@@ -61,21 +76,22 @@ function responder(voto) {
 
     document.getElementById("placar").style.display = "block"
 
-    setTimeout(() => {
+}
 
-        indicePergunta++
 
-        if (indicePergunta >= totalPerguntas) {
+function proximaPergunta(){
 
-            mostrarResultado()
+    indicePergunta++
 
-        } else {
+    if (indicePergunta >= totalPerguntas) {
 
-            mostrarPergunta()
+        mostrarResultado()
 
-        }
+    } else {
 
-    }, 1200)
+        mostrarPergunta()
+
+    }
 
 }
 
