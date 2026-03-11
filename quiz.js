@@ -11,6 +11,7 @@ async function iniciarQuiz(qtd) {
     totalPerguntas = qtd
 
     document.getElementById("menu-quiz").style.display = "none"
+    document.getElementById("header-inicial").style.display = "none"
     document.getElementById("quiz").style.display = "flex"
 
     perguntas = await fetch("data/8_perguntas.json").then(r => r.json())
@@ -150,5 +151,6 @@ function reiniciarQuiz() {
 
     document.getElementById("resultado").style.display = "none"
     document.getElementById("menu-quiz").style.display = "block"
+    document.getElementById("header-inicial").style.display = "block"
 
 }
