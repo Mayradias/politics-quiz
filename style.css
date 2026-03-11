@@ -236,3 +236,17 @@ ol{
 text-align:left;
 
 }
+
+.selecionado{
+
+background:#2563eb;
+color:white;
+
+}
+
+.placar-destaque{
+
+font-weight:bold;
+color:#2563eb;
+
+}

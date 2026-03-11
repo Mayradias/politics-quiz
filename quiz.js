@@ -8,6 +8,8 @@ let respostasUsuario = {}
 
 let tipoResumo = "objetivo"
 
+let votoTravado = false
+
 
 
 async function iniciarQuiz(qtd){
@@ -20,9 +22,6 @@ document.getElementById("quiz").style.display="flex"
 
 perguntas = await fetch("data/8_perguntas.json").then(r=>r.json())
 votosDeputados = await fetch("data/9_votos_deputados.json").then(r=>r.json())
-
-console.log("Perguntas carregadas:", perguntas)
-console.log("Votos deputados carregados:", votosDeputados)
 
 perguntas = embaralhar(perguntas)
 
@@ -61,7 +60,11 @@ mostrarPergunta()
 
 function mostrarPergunta(){
 
+votoTravado = false
+
 document.getElementById("placar").style.display="none"
+
+resetarBotoes()
 
 let p = perguntas[indicePergunta]
 
@@ -117,18 +120,54 @@ document.getElementById("placar-abst").innerText = `Abstenção: ${percAbst}%`
 
 
 
+function resetarBotoes(){
+
+document.getElementById("btn-sim").classList.remove("selecionado")
+document.getElementById("btn-nao").classList.remove("selecionado")
+document.getElementById("btn-abst").classList.remove("selecionado")
+
+document.getElementById("placar-sim").classList.remove("placar-destaque")
+document.getElementById("placar-nao").classList.remove("placar-destaque")
+document.getElementById("placar-abst").classList.remove("placar-destaque")
+
+}
+
+
+
 function responder(voto){
+
+if(votoTravado) return
+
+votoTravado = true
 
 let p = perguntas[indicePergunta]
 
 let id = pegarIdPergunta(p)
 
-console.log("Pergunta atual:", p)
-console.log("ID detectado:", id)
-
 respostasUsuario[id]=voto
 
-console.log("Respostas do usuário:", respostasUsuario)
+
+
+if(voto==="Sim"){
+
+document.getElementById("btn-sim").classList.add("selecionado")
+document.getElementById("placar-sim").classList.add("placar-destaque")
+
+}
+
+if(voto==="Não"){
+
+document.getElementById("btn-nao").classList.add("selecionado")
+document.getElementById("placar-nao").classList.add("placar-destaque")
+
+}
+
+if(voto==="Abstenção"){
+
+document.getElementById("btn-abst").classList.add("selecionado")
+document.getElementById("placar-abst").classList.add("placar-destaque")
+
+}
 
 document.getElementById("placar").style.display="block"
 
@@ -159,8 +198,6 @@ function mostrarResultado(){
 document.getElementById("quiz").style.display="none"
 document.getElementById("resultado").style.display="block"
 
-console.log("Respostas finais do usuário:", respostasUsuario)
-
 let ranking=[]
 
 for(let dep in votosDeputados){
@@ -169,15 +206,10 @@ let deputado=votosDeputados[dep]
 
 let votos=deputado.votos
 
-console.log("Comparando deputado:", dep)
-console.log("Votos deputado:", votos)
-
 let iguais=0
 let total=0
 
 for(let votacao in respostasUsuario){
-
-console.log("Comparando votação:", votacao)
 
 if(votos[votacao]){
 
@@ -192,8 +224,6 @@ iguais++
 }
 
 }
-
-console.log("Total comparável:", total)
 
 if(total>0){
 
@@ -213,8 +243,6 @@ score:score
 }
 
 
-
-console.log("Ranking calculado:", ranking)
 
 ranking.sort((a,b)=>b.score-a.score)
 
@@ -258,4 +286,4 @@ document.getElementById("resultado").style.display="none"
 document.getElementById("menu-quiz").style.display="block"
 document.getElementById("header-inicial").style.display="block"
 
-}
+}   
