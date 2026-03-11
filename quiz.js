@@ -39,6 +39,14 @@ return array.sort(()=>Math.random()-0.5)
 
 
 
+function pegarIdPergunta(p){
+
+return p.votacao_id || p.id || p.votacao
+
+}
+
+
+
 function mudarResumo(tipo){
 
 tipoResumo = tipo
@@ -110,7 +118,18 @@ function responder(voto){
 
 let p = perguntas[indicePergunta]
 
-respostasUsuario[p.votacao_id]=voto
+let id = pegarIdPergunta(p)
+
+if(!id){
+
+console.error("Pergunta sem ID:", p)
+return
+
+}
+
+respostasUsuario[id]=voto
+
+console.log("Resposta registrada:", id, voto)
 
 document.getElementById("placar").style.display="block"
 
