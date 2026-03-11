@@ -21,11 +21,22 @@ document.getElementById("quiz").style.display="flex"
 perguntas = await fetch("data/8_perguntas.json").then(r=>r.json())
 votosDeputados = await fetch("data/9_votos_deputados.json").then(r=>r.json())
 
-perguntas = perguntas.sort(()=>Math.random()-0.5)
+console.log("Perguntas carregadas:", perguntas)
+console.log("Votos deputados carregados:", votosDeputados)
+
+perguntas = embaralhar(perguntas)
 
 perguntas = perguntas.slice(0,totalPerguntas)
 
 mostrarPergunta()
+
+}
+
+
+
+function embaralhar(array){
+
+return array.sort(()=>Math.random()-0.5)
 
 }
 
@@ -52,6 +63,12 @@ function mostrarPergunta(){
 
 document.getElementById("placar").style.display="none"
 
+
+// restaurar botões
+document.querySelector(".voto-sim").onclick = ()=>responder("Sim")
+document.querySelector(".voto-nao").onclick = ()=>responder("Não")
+document.querySelector(".voto-abst").onclick = ()=>responder("Abstenção")
+
 document.querySelectorAll(".opcoes button").forEach(btn=>{
 btn.classList.remove("selecionado")
 })
@@ -59,6 +76,8 @@ btn.classList.remove("selecionado")
 document.getElementById("placar-sim").classList.remove("placar-destaque")
 document.getElementById("placar-nao").classList.remove("placar-destaque")
 document.getElementById("placar-abst").classList.remove("placar-destaque")
+
+
 
 let p = perguntas[indicePergunta]
 
@@ -71,20 +90,29 @@ document.getElementById("progresso").style.width = progresso+"%"
 
 
 if(tipoResumo==="objetivo"){
+
 document.getElementById("resumo").innerText = p.resumo_objetivo || p.resumo
+
 }else{
+
 document.getElementById("resumo").innerText = p.resumo_critico || p.resumo
+
 }
 
 
 
 let frases = p.contexto.split(". ")
+
 let html=""
 
 frases.forEach(f=>{
+
 if(f.trim()!==""){
+
 html += `<p>${f.trim()}.</p>`
+
 }
+
 })
 
 document.getElementById("contexto").innerHTML = html
@@ -108,28 +136,42 @@ document.getElementById("placar-abst").innerText = `Abstenção: ${percAbst}%`
 function responder(voto){
 
 let p = perguntas[indicePergunta]
+
 let id = pegarIdPergunta(p)
+
+console.log("Pergunta atual:", p)
+console.log("ID detectado:", id)
 
 respostasUsuario[id]=voto
 
+console.log("Respostas do usuário:", respostasUsuario)
+
+
+
+// bloquear botões
 document.querySelectorAll(".opcoes button").forEach(btn=>{
-btn.onclick=null
+btn.onclick = null
 })
 
+
+
+// destacar botão escolhido
 if(voto==="Sim"){
-document.getElementById("btn-sim").classList.add("selecionado")
+document.querySelector(".voto-sim").classList.add("selecionado")
 document.getElementById("placar-sim").classList.add("placar-destaque")
 }
 
 if(voto==="Não"){
-document.getElementById("btn-nao").classList.add("selecionado")
+document.querySelector(".voto-nao").classList.add("selecionado")
 document.getElementById("placar-nao").classList.add("placar-destaque")
 }
 
 if(voto==="Abstenção"){
-document.getElementById("btn-abst").classList.add("selecionado")
+document.querySelector(".voto-abst").classList.add("selecionado")
 document.getElementById("placar-abst").classList.add("placar-destaque")
 }
+
+
 
 document.getElementById("placar").style.display="block"
 
@@ -142,9 +184,13 @@ function proximaPergunta(){
 indicePergunta++
 
 if(indicePergunta>=totalPerguntas){
+
 mostrarResultado()
+
 }else{
+
 mostrarPergunta()
+
 }
 
 }
@@ -156,105 +202,89 @@ function mostrarResultado(){
 document.getElementById("quiz").style.display="none"
 document.getElementById("resultado").style.display="block"
 
-let rankingDeputados=[]
-let partidos={}
+console.log("Respostas finais do usuário:", respostasUsuario)
+
+let ranking=[]
 
 for(let dep in votosDeputados){
 
 let deputado=votosDeputados[dep]
+
 let votos=deputado.votos
+
+console.log("Comparando deputado:", dep)
+console.log("Votos deputado:", votos)
 
 let iguais=0
 let total=0
 
 for(let votacao in respostasUsuario){
 
+console.log("Comparando votação:", votacao)
+
 if(votos[votacao]){
 
 total++
 
 if(votos[votacao]===respostasUsuario[votacao]){
+
 iguais++
-}
 
 }
 
 }
+
+}
+
+console.log("Total comparável:", total)
 
 if(total>0){
 
 let score=Math.round((iguais/total)*100)
 
-rankingDeputados.push({
+ranking.push({
+
 nome:dep,
 partido:deputado.partido,
 estado:deputado.estado,
 score:score
-})
 
-if(!partidos[deputado.partido]){
-partidos[deputado.partido]=[]
-}
-
-partidos[deputado.partido].push(score)
-
-}
-
-}
-
-
-
-rankingDeputados.sort((a,b)=>b.score-a.score)
-
-let rankingDeputadosMenos=[...rankingDeputados].reverse()
-
-let rankingPartidos=[]
-
-for(let p in partidos){
-
-let media=Math.round(
-partidos[p].reduce((a,b)=>a+b,0)/partidos[p].length
-)
-
-rankingPartidos.push({
-partido:p,
-score:media
 })
 
 }
 
-rankingPartidos.sort((a,b)=>b.score-a.score)
-
-let rankingPartidosMenos=[...rankingPartidos].reverse()
+}
 
 
 
-preencherLista("ranking-deputados-mais",rankingDeputados.slice(0,5),true)
-preencherLista("ranking-deputados-menos",rankingDeputadosMenos.slice(0,5),true)
+console.log("Ranking calculado:", ranking)
 
-preencherLista("ranking-partidos-mais",rankingPartidos.slice(0,5),false)
-preencherLista("ranking-partidos-menos",rankingPartidosMenos.slice(0,5),false)
+ranking.sort((a,b)=>b.score-a.score)
+
+let top=ranking.slice(0,5)
+
+let lista=document.getElementById("ranking-deputados")
+
+lista.innerHTML=""
+
+
+
+if(top.length===0){
+
+lista.innerHTML="<li>Nenhum deputado teve votos comparáveis.</li>"
+return
 
 }
 
 
 
-function preencherLista(id,lista,deputado){
-
-let el=document.getElementById(id)
-el.innerHTML=""
-
-lista.forEach(i=>{
+top.forEach(d=>{
 
 let li=document.createElement("li")
 
-if(deputado){
-li.innerText=`${i.nome} (${i.partido}-${i.estado}) — ${i.score}%`
-}else{
-li.innerText=`${i.partido} — ${i.score}%`
-}
+li.innerText = `${d.nome} (${d.partido}-${d.estado}) — ${d.score}%`
 
-el.appendChild(li)
+lista.appendChild(li)
 
 })
 

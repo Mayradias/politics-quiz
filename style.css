@@ -1,274 +1,252 @@
-let perguntas = []
-let votosDeputados = {}
+body{
 
-let indicePergunta = 0
-let totalPerguntas = 10
+font-family:Arial,Helvetica,sans-serif;
+background:#f5f7fb;
+margin:0;
+padding:0;
+display:flex;
+justify-content:center;
 
-let respostasUsuario = {}
+}
 
-let tipoResumo = "objetivo"
+.container{
 
-
-
-async function iniciarQuiz(qtd){
-
-totalPerguntas = qtd
-
-document.getElementById("menu-quiz").style.display="none"
-document.getElementById("header-inicial").style.display="none"
-document.getElementById("quiz").style.display="flex"
-
-perguntas = await fetch("data/8_perguntas.json").then(r=>r.json())
-votosDeputados = await fetch("data/9_votos_deputados.json").then(r=>r.json())
-
-perguntas = perguntas.sort(()=>Math.random()-0.5)
-
-perguntas = perguntas.slice(0,totalPerguntas)
-
-mostrarPergunta()
+max-width:800px;
+width:100%;
+padding:40px 20px;
+text-align:center;
 
 }
 
 
 
-function pegarIdPergunta(p){
+header{
 
-return p.votacao_id || p.id || p.votacao
+margin-top:60px;
+margin-bottom:140px;
+
+}
+
+h1{
+
+font-size:30px;
+line-height:1.4;
+font-weight:600;
 
 }
 
 
 
-function mudarResumo(tipo){
+.quiz-opcoes{
 
-tipoResumo = tipo
-mostrarPergunta()
+display:flex;
+justify-content:center;
+gap:25px;
+flex-wrap:wrap;
+
+}
+
+.botao-quiz{
+
+font-size:18px;
+padding:20px 30px;
+border:none;
+border-radius:10px;
+background:#ffffff;
+box-shadow:0 4px 10px rgba(0,0,0,0.08);
+cursor:pointer;
+transition:all 0.2s ease;
+width:180px;
 
 }
 
 
 
-function mostrarPergunta(){
+#quiz{
 
-document.getElementById("placar").style.display="none"
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:70vh;
 
-document.querySelectorAll(".opcoes button").forEach(btn=>{
-btn.classList.remove("selecionado")
-})
-
-document.getElementById("placar-sim").classList.remove("placar-destaque")
-document.getElementById("placar-nao").classList.remove("placar-destaque")
-document.getElementById("placar-abst").classList.remove("placar-destaque")
-
-let p = perguntas[indicePergunta]
-
-document.getElementById("contador").innerText =
-`Pergunta ${indicePergunta+1} de ${totalPerguntas}`
-
-let progresso = (indicePergunta/totalPerguntas)*100
-document.getElementById("progresso").style.width = progresso+"%"
-
-
-
-if(tipoResumo==="objetivo"){
-document.getElementById("resumo").innerText = p.resumo_objetivo || p.resumo
-}else{
-document.getElementById("resumo").innerText = p.resumo_critico || p.resumo
 }
 
+.quiz-card{
 
-
-let frases = p.contexto.split(". ")
-let html=""
-
-frases.forEach(f=>{
-if(f.trim()!==""){
-html += `<p>${f.trim()}.</p>`
-}
-})
-
-document.getElementById("contexto").innerHTML = html
-
-
-
-let total = p.sim + p.nao + p.abst
-
-let percSim = Math.round((p.sim/total)*100)
-let percNao = Math.round((p.nao/total)*100)
-let percAbst = Math.round((p.abst/total)*100)
-
-document.getElementById("placar-sim").innerText = `A favor: ${percSim}%`
-document.getElementById("placar-nao").innerText = `Contra: ${percNao}%`
-document.getElementById("placar-abst").innerText = `Abstenção: ${percAbst}%`
+background:#ffffff;
+padding:35px;
+border-radius:14px;
+box-shadow:0 6px 20px rgba(0,0,0,0.08);
+width:100%;
 
 }
 
 
 
-function responder(voto){
+#contador{
 
-let p = perguntas[indicePergunta]
-let id = pegarIdPergunta(p)
+font-size:14px;
+color:#666;
+margin-bottom:10px;
 
-respostasUsuario[id]=voto
-
-document.querySelectorAll(".opcoes button").forEach(btn=>{
-btn.onclick=null
-})
-
-if(voto==="Sim"){
-document.getElementById("btn-sim").classList.add("selecionado")
-document.getElementById("placar-sim").classList.add("placar-destaque")
 }
 
-if(voto==="Não"){
-document.getElementById("btn-nao").classList.add("selecionado")
-document.getElementById("placar-nao").classList.add("placar-destaque")
+.barra{
+
+height:8px;
+background:#e4e7ec;
+border-radius:6px;
+overflow:hidden;
+margin-bottom:25px;
+
 }
 
-if(voto==="Abstenção"){
-document.getElementById("btn-abst").classList.add("selecionado")
-document.getElementById("placar-abst").classList.add("placar-destaque")
-}
+#progresso{
 
-document.getElementById("placar").style.display="block"
+height:8px;
+background:#3b82f6;
+width:0%;
 
 }
 
 
 
-function proximaPergunta(){
+.tipo-resumo{
 
-indicePergunta++
-
-if(indicePergunta>=totalPerguntas){
-mostrarResultado()
-}else{
-mostrarPergunta()
-}
+margin-bottom:20px;
 
 }
 
+.tipo-resumo button{
 
-
-function mostrarResultado(){
-
-document.getElementById("quiz").style.display="none"
-document.getElementById("resultado").style.display="block"
-
-let rankingDeputados=[]
-let partidos={}
-
-for(let dep in votosDeputados){
-
-let deputado=votosDeputados[dep]
-let votos=deputado.votos
-
-let iguais=0
-let total=0
-
-for(let votacao in respostasUsuario){
-
-if(votos[votacao]){
-
-total++
-
-if(votos[votacao]===respostasUsuario[votacao]){
-iguais++
-}
-
-}
-
-}
-
-if(total>0){
-
-let score=Math.round((iguais/total)*100)
-
-rankingDeputados.push({
-nome:dep,
-partido:deputado.partido,
-estado:deputado.estado,
-score:score
-})
-
-if(!partidos[deputado.partido]){
-partidos[deputado.partido]=[]
-}
-
-partidos[deputado.partido].push(score)
-
-}
+margin:5px;
+padding:6px 12px;
+border:none;
+border-radius:6px;
+cursor:pointer;
 
 }
 
 
 
-rankingDeputados.sort((a,b)=>b.score-a.score)
+.resumo-box{
 
-let rankingDeputadosMenos=[...rankingDeputados].reverse()
-
-let rankingPartidos=[]
-
-for(let p in partidos){
-
-let media=Math.round(
-partidos[p].reduce((a,b)=>a+b,0)/partidos[p].length
-)
-
-rankingPartidos.push({
-partido:p,
-score:media
-})
-
-}
-
-rankingPartidos.sort((a,b)=>b.score-a.score)
-
-let rankingPartidosMenos=[...rankingPartidos].reverse()
-
-
-
-preencherLista("ranking-deputados-mais",rankingDeputados.slice(0,5),true)
-preencherLista("ranking-deputados-menos",rankingDeputadosMenos.slice(0,5),true)
-
-preencherLista("ranking-partidos-mais",rankingPartidos.slice(0,5),false)
-preencherLista("ranking-partidos-menos",rankingPartidosMenos.slice(0,5),false)
+font-size:16px;
+color:#555;
+margin-bottom:10px;
 
 }
 
 
 
-function preencherLista(id,lista,deputado){
+.contexto-box{
 
-let el=document.getElementById(id)
-el.innerHTML=""
+font-size:22px;
+font-weight:600;
+margin-bottom:30px;
 
-lista.forEach(i=>{
-
-let li=document.createElement("li")
-
-if(deputado){
-li.innerText=`${i.nome} (${i.partido}-${i.estado}) — ${i.score}%`
-}else{
-li.innerText=`${i.partido} — ${i.score}%`
 }
 
-el.appendChild(li)
+.contexto-box p{
 
-})
+margin-bottom:12px;
 
 }
 
 
 
-function reiniciarQuiz(){
+.opcoes{
 
-indicePergunta=0
-respostasUsuario={}
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+margin-bottom:25px;
 
-document.getElementById("resultado").style.display="none"
-document.getElementById("menu-quiz").style.display="block"
-document.getElementById("header-inicial").style.display="block"
+}
+
+.opcoes button{
+
+font-size:16px;
+padding:12px 22px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+
+}
+
+
+
+.voto-sim{
+
+background:#d1fae5;
+
+}
+
+.voto-nao{
+
+background:#fee2e2;
+
+}
+
+.voto-abst{
+
+background:#e5e7eb;
+
+}
+
+
+
+.placar{
+
+margin-top:25px;
+font-size:14px;
+color:#555;
+
+}
+
+
+
+#proxima{
+
+margin-top:20px;
+padding:10px 18px;
+font-size:16px;
+border:none;
+border-radius:8px;
+background:#3b82f6;
+color:white;
+cursor:pointer;
+
+}
+
+
+
+.resultado-card{
+
+background:#ffffff;
+padding:35px;
+border-radius:14px;
+box-shadow:0 6px 20px rgba(0,0,0,0.08);
+
+}
+
+ol{
+
+text-align:left;
+
+}
+
+.selecionado{
+
+background:#2563eb;
+color:white;
+
+}
+
+.placar-destaque{
+
+font-weight:bold;
+color:#2563eb;
 
 }
