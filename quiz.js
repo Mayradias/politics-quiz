@@ -8,8 +8,6 @@ let respostasUsuario = {}
 
 let tipoResumo = "objetivo"
 
-let votoTravado = false
-
 
 
 async function iniciarQuiz(qtd){
@@ -59,8 +57,6 @@ mostrarPergunta()
 
 
 function mostrarPergunta(){
-
-votoTravado = false
 
 document.getElementById("placar").style.display="none"
 
@@ -122,9 +118,12 @@ document.getElementById("placar-abst").innerText = `Abstenção: ${percAbst}%`
 
 function resetarBotoes(){
 
-document.getElementById("btn-sim").classList.remove("selecionado")
-document.getElementById("btn-nao").classList.remove("selecionado")
-document.getElementById("btn-abst").classList.remove("selecionado")
+let botoes = document.querySelectorAll(".opcoes button")
+
+botoes.forEach(btn=>{
+btn.disabled = false
+btn.classList.remove("selecionado")
+})
 
 document.getElementById("placar-sim").classList.remove("placar-destaque")
 document.getElementById("placar-nao").classList.remove("placar-destaque")
@@ -136,9 +135,11 @@ document.getElementById("placar-abst").classList.remove("placar-destaque")
 
 function responder(voto){
 
-if(votoTravado) return
+let botoes = document.querySelectorAll(".opcoes button")
 
-votoTravado = true
+botoes.forEach(btn=>{
+btn.disabled = true
+})
 
 let p = perguntas[indicePergunta]
 
@@ -286,4 +287,4 @@ document.getElementById("resultado").style.display="none"
 document.getElementById("menu-quiz").style.display="block"
 document.getElementById("header-inicial").style.display="block"
 
-}   
+}
