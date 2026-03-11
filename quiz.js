@@ -21,6 +21,9 @@ document.getElementById("quiz").style.display="flex"
 perguntas = await fetch("data/8_perguntas.json").then(r=>r.json())
 votosDeputados = await fetch("data/9_votos_deputados.json").then(r=>r.json())
 
+console.log("Perguntas carregadas:", perguntas)
+console.log("Votos deputados carregados:", votosDeputados)
+
 perguntas = embaralhar(perguntas)
 
 perguntas = perguntas.slice(0,totalPerguntas)
@@ -60,7 +63,21 @@ function mostrarPergunta(){
 
 document.getElementById("placar").style.display="none"
 
-resetarBotoes()
+
+// restaurar botões
+document.querySelector(".voto-sim").onclick = ()=>responder("Sim")
+document.querySelector(".voto-nao").onclick = ()=>responder("Não")
+document.querySelector(".voto-abst").onclick = ()=>responder("Abstenção")
+
+document.querySelectorAll(".opcoes button").forEach(btn=>{
+btn.classList.remove("selecionado")
+})
+
+document.getElementById("placar-sim").classList.remove("placar-destaque")
+document.getElementById("placar-nao").classList.remove("placar-destaque")
+document.getElementById("placar-abst").classList.remove("placar-destaque")
+
+
 
 let p = perguntas[indicePergunta]
 
@@ -116,59 +133,45 @@ document.getElementById("placar-abst").innerText = `Abstenção: ${percAbst}%`
 
 
 
-function resetarBotoes(){
-
-let botoes = document.querySelectorAll(".opcoes button")
-
-botoes.forEach(btn=>{
-btn.disabled = false
-btn.classList.remove("selecionado")
-})
-
-document.getElementById("placar-sim").classList.remove("placar-destaque")
-document.getElementById("placar-nao").classList.remove("placar-destaque")
-document.getElementById("placar-abst").classList.remove("placar-destaque")
-
-}
-
-
-
 function responder(voto){
-
-let botoes = document.querySelectorAll(".opcoes button")
-
-botoes.forEach(btn=>{
-btn.disabled = true
-})
 
 let p = perguntas[indicePergunta]
 
 let id = pegarIdPergunta(p)
 
+console.log("Pergunta atual:", p)
+console.log("ID detectado:", id)
+
 respostasUsuario[id]=voto
 
+console.log("Respostas do usuário:", respostasUsuario)
 
 
+
+// bloquear botões
+document.querySelectorAll(".opcoes button").forEach(btn=>{
+btn.onclick = null
+})
+
+
+
+// destacar botão escolhido
 if(voto==="Sim"){
-
-document.getElementById("btn-sim").classList.add("selecionado")
+document.querySelector(".voto-sim").classList.add("selecionado")
 document.getElementById("placar-sim").classList.add("placar-destaque")
-
 }
 
 if(voto==="Não"){
-
-document.getElementById("btn-nao").classList.add("selecionado")
+document.querySelector(".voto-nao").classList.add("selecionado")
 document.getElementById("placar-nao").classList.add("placar-destaque")
-
 }
 
 if(voto==="Abstenção"){
-
-document.getElementById("btn-abst").classList.add("selecionado")
+document.querySelector(".voto-abst").classList.add("selecionado")
 document.getElementById("placar-abst").classList.add("placar-destaque")
-
 }
+
+
 
 document.getElementById("placar").style.display="block"
 
@@ -199,6 +202,8 @@ function mostrarResultado(){
 document.getElementById("quiz").style.display="none"
 document.getElementById("resultado").style.display="block"
 
+console.log("Respostas finais do usuário:", respostasUsuario)
+
 let ranking=[]
 
 for(let dep in votosDeputados){
@@ -207,10 +212,15 @@ let deputado=votosDeputados[dep]
 
 let votos=deputado.votos
 
+console.log("Comparando deputado:", dep)
+console.log("Votos deputado:", votos)
+
 let iguais=0
 let total=0
 
 for(let votacao in respostasUsuario){
+
+console.log("Comparando votação:", votacao)
 
 if(votos[votacao]){
 
@@ -225,6 +235,8 @@ iguais++
 }
 
 }
+
+console.log("Total comparável:", total)
 
 if(total>0){
 
@@ -244,6 +256,8 @@ score:score
 }
 
 
+
+console.log("Ranking calculado:", ranking)
 
 ranking.sort((a,b)=>b.score-a.score)
 
