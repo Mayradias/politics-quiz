@@ -8,6 +8,8 @@ let respostasUsuario = {}
 
 let tipoResumo = "objetivo"
 
+
+
 async function iniciarQuiz(qtd){
 
 totalPerguntas = qtd
@@ -40,7 +42,6 @@ return array.sort(()=>Math.random()-0.5)
 function mudarResumo(tipo){
 
 tipoResumo = tipo
-
 mostrarPergunta()
 
 }
@@ -135,6 +136,22 @@ mostrarPergunta()
 
 
 
+function normalizarVoto(v){
+
+if(!v) return null
+
+v = v.toLowerCase()
+
+if(v.includes("sim")) return "Sim"
+if(v.includes("não") || v.includes("nao")) return "Não"
+if(v.includes("absten")) return "Abstenção"
+
+return null
+
+}
+
+
+
 function mostrarResultado(){
 
 document.getElementById("quiz").style.display="none"
@@ -153,11 +170,18 @@ for(let votacao in respostasUsuario){
 
 if(votos[votacao]){
 
+let votoDep = normalizarVoto(votos[votacao])
+let votoUser = normalizarVoto(respostasUsuario[votacao])
+
+if(votoDep && votoUser){
+
 total++
 
-if(votos[votacao]===respostasUsuario[votacao]){
+if(votoDep===votoUser){
 
 iguais++
+
+}
 
 }
 
@@ -180,6 +204,8 @@ score:score
 
 }
 
+
+
 ranking.sort((a,b)=>b.score-a.score)
 
 let top=ranking.slice(0,5)
@@ -187,6 +213,17 @@ let top=ranking.slice(0,5)
 let lista=document.getElementById("ranking-deputados")
 
 lista.innerHTML=""
+
+
+
+if(top.length===0){
+
+lista.innerHTML="<li>Nenhum deputado teve votos comparáveis.</li>"
+return
+
+}
+
+
 
 top.forEach(d=>{
 
