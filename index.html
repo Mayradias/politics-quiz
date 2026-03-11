@@ -8,10 +8,15 @@
 
 <link rel="stylesheet" href="style.css">
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
 
 
 <body>
+
+
+<div class="container">
 
 
 <header>
@@ -26,77 +31,102 @@ e descubra quais parlamentares mais concordam com você
 </header>
 
 
-<!-- escolha do quiz -->
 
-<div id="menu-quiz">
+<!-- MENU INICIAL -->
+
+<section id="menu-quiz">
 
 <h2>Escolha o tamanho do quiz</h2>
 
-<button onclick="iniciarQuiz(5)">Quiz rápido – 5 perguntas</button>
+<div class="quiz-opcoes">
 
-<button onclick="iniciarQuiz(10)">Quiz médio – 10 perguntas</button>
+<button class="botao-quiz" onclick="iniciarQuiz(5)">
+⚡ Quiz rápido<br>
+<span>5 perguntas</span>
+</button>
 
-<button onclick="iniciarQuiz(15)">Quiz completo – 15 perguntas</button>
+<button class="botao-quiz" onclick="iniciarQuiz(10)">
+🧠 Quiz médio<br>
+<span>10 perguntas</span>
+</button>
+
+<button class="botao-quiz" onclick="iniciarQuiz(15)">
+🏛 Quiz completo<br>
+<span>15 perguntas</span>
+</button>
 
 </div>
 
+</section>
 
 
-<!-- área do quiz -->
 
-<div id="quiz" style="display:none;">
+<!-- QUIZ -->
+
+<section id="quiz" style="display:none;">
 
 
-<div id="topo-pergunta">
+<div class="quiz-card">
 
-<span id="contador"></span>
 
-<div id="barra-progresso">
+<div class="topo-pergunta">
+
+<div id="contador"></div>
+
+<div class="barra">
 <div id="progresso"></div>
 </div>
 
 </div>
 
 
-<!-- alternar tipo de resumo -->
 
-<div id="tipo-resumo">
+<div class="tipo-resumo">
 
-Resumo:
+Mostrar resumo:
+
 <button onclick="mudarResumo('objetivo')">Objetivo</button>
 <button onclick="mudarResumo('critico')">Crítico</button>
 
 </div>
 
 
-<!-- resumo -->
+
+<div class="resumo-box">
 
 <div id="resumo"></div>
-
-
-<!-- contexto -->
-
-<div id="contexto"></div>
-
-
-
-<!-- opções -->
-
-<div id="opcoes">
-
-<button onclick="responder('Sim')">👍 A favor</button>
-
-<button onclick="responder('Não')">👎 Contra</button>
-
-<button onclick="responder('Abstenção')">🤷 Indiferente</button>
 
 </div>
 
 
 
-<!-- resultado da votação -->
+<div class="contexto-box">
 
-<div id="placar">
+<div id="contexto"></div>
+
+</div>
+
+
+
+<div class="opcoes">
+
+<button class="voto-sim" onclick="responder('Sim')">
+👍 A favor
+</button>
+
+<button class="voto-nao" onclick="responder('Não')">
+👎 Contra
+</button>
+
+<button class="voto-abst" onclick="responder('Abstenção')">
+🤷 Indiferente
+</button>
+
+</div>
+
+
+
+<div class="placar">
 
 <p>Resultado da votação na Câmara</p>
 
@@ -109,26 +139,47 @@ Resumo:
 </div>
 
 
-
-<!-- resultado final -->
-
-<div id="resultado" style="display:none;">
+</section>
 
 
-<h2>Resultado</h2>
 
+<!-- RESULTADO -->
+
+<section id="resultado" style="display:none;">
+
+
+<div class="resultado-card">
+
+<h2>Resultado do quiz</h2>
+
+
+<div class="ranking">
 
 <h3>Deputados mais próximos de você</h3>
 
 <ol id="ranking-deputados"></ol>
 
+</div>
+
+
+<div class="ranking">
 
 <h3>Partidos mais próximos de você</h3>
 
 <ol id="ranking-partidos"></ol>
 
+</div>
 
-<button onclick="reiniciarQuiz()">Fazer outro quiz</button>
+
+<button class="botao-reiniciar" onclick="reiniciarQuiz()">
+Refazer quiz
+</button>
+
+
+</div>
+
+
+</section>
 
 
 </div>
@@ -139,5 +190,4 @@ Resumo:
 
 
 </body>
-
 </html>
