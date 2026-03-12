@@ -165,6 +165,11 @@ document.querySelectorAll(".opcoes button").forEach(btn=>{
 btn.classList.remove("selecionado")
 })
 
+// limpar destaque do placar
+document.getElementById("placar-sim").classList.remove("placar-destaque")
+document.getElementById("placar-nao").classList.remove("placar-destaque")
+document.getElementById("placar-abst").classList.remove("placar-destaque")
+
 let p = perguntas[indicePergunta]
 let id = pegarIdPergunta(p)
 
