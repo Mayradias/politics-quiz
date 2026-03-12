@@ -64,7 +64,6 @@ function mostrarPergunta(){
 document.getElementById("placar").style.display="none"
 
 
-// restaurar botões
 document.querySelector(".voto-sim").onclick = ()=>responder("Sim")
 document.querySelector(".voto-nao").onclick = ()=>responder("Não")
 document.querySelector(".voto-abst").onclick = ()=>responder("Abstenção")
@@ -148,14 +147,12 @@ console.log("Respostas do usuário:", respostasUsuario)
 
 
 
-// bloquear botões
 document.querySelectorAll(".opcoes button").forEach(btn=>{
 btn.onclick = null
 })
 
 
 
-// destacar botão escolhido
 if(voto==="Sim"){
 document.querySelector(".voto-sim").classList.add("selecionado")
 document.getElementById("placar-sim").classList.add("placar-destaque")
@@ -206,30 +203,35 @@ console.log("Respostas finais do usuário:", respostasUsuario)
 
 let ranking=[]
 
+let perguntasRespondidas = Object.keys(respostasUsuario).length
+let minimoComparacoes = perguntasRespondidas * 0.8
+
 for(let dep in votosDeputados){
 
 let deputado=votosDeputados[dep]
-
 let votos=deputado.votos
 
 console.log("Comparando deputado:", dep)
-console.log("Votos deputado:", votos)
 
 let iguais=0
 let total=0
 
 for(let votacao in respostasUsuario){
 
+let votoDeputado = votos[votacao]
+
 console.log("Comparando votação:", votacao)
 
-if(votos[votacao]){
+if(
+votoDeputado==="Sim" ||
+votoDeputado==="Não" ||
+votoDeputado==="Abstenção"
+){
 
 total++
 
-if(votos[votacao]===respostasUsuario[votacao]){
-
+if(votoDeputado===respostasUsuario[votacao]){
 iguais++
-
 }
 
 }
@@ -238,7 +240,9 @@ iguais++
 
 console.log("Total comparável:", total)
 
-if(total>0){
+
+
+if(total >= minimoComparacoes){
 
 let score=Math.round((iguais/total)*100)
 
@@ -271,7 +275,7 @@ lista.innerHTML=""
 
 if(top.length===0){
 
-lista.innerHTML="<li>Nenhum deputado teve votos comparáveis.</li>"
+lista.innerHTML="<li>Nenhum deputado teve votos comparáveis suficientes.</li>"
 return
 
 }
