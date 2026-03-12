@@ -183,6 +183,8 @@ let deputadosValidos = 0
 
 let perguntasRespondidas = Object.keys(respostasUsuario).length
 
+
+
 for(let dep in votosDeputados){
 
 deputadosAnalisados++
@@ -240,9 +242,16 @@ ranking.sort((a,b)=>b.score-a.score)
 
 
 let top=ranking.slice(0,5)
-let bottom=ranking.slice(-5).reverse()
+
+let rankingAsc=[...ranking].sort((a,b)=>a.score-b.score)
+
+let bottom=rankingAsc.slice(0,5)
 
 
+
+// ============================
+// MOSTRAR DEPUTADOS
+// ============================
 
 let lista=document.getElementById("ranking-deputados")
 lista.innerHTML=""
@@ -277,6 +286,91 @@ ${d.iguais} de ${perguntasRespondidas} votações iguais
 </span>`
 
 listaMenores.appendChild(li)
+
+})
+
+
+
+// ============================
+// CALCULAR PARTIDOS
+// ============================
+
+let partidos={}
+
+ranking.forEach(d=>{
+
+if(!partidos[d.partido]){
+partidos[d.partido]={soma:0,total:0}
+}
+
+partidos[d.partido].soma+=d.score
+partidos[d.partido].total++
+
+})
+
+let rankingPartidos=[]
+
+for(let p in partidos){
+
+let media=Math.round(partidos[p].soma/partidos[p].total)
+
+rankingPartidos.push({
+
+partido:p,
+score:media,
+deputados:partidos[p].total
+
+})
+
+}
+
+rankingPartidos.sort((a,b)=>b.score-a.score)
+
+let topPartidos=rankingPartidos.slice(0,5)
+
+let rankingPartidosAsc=[...rankingPartidos].sort((a,b)=>a.score-b.score)
+
+let bottomPartidos=rankingPartidosAsc.slice(0,5)
+
+
+
+// ============================
+// MOSTRAR PARTIDOS
+// ============================
+
+let listaPartidos=document.getElementById("ranking-partidos")
+listaPartidos.innerHTML=""
+
+topPartidos.forEach(p=>{
+
+let li=document.createElement("li")
+
+li.innerHTML=
+`${p.partido} — ${p.score}%<br>
+<span style="font-size:13px;color:#666;">
+${p.deputados} deputados comparados
+</span>`
+
+listaPartidos.appendChild(li)
+
+})
+
+
+
+let listaPartidosMenores=document.getElementById("ranking-partidos-menores")
+listaPartidosMenores.innerHTML=""
+
+bottomPartidos.forEach(p=>{
+
+let li=document.createElement("li")
+
+li.innerHTML=
+`${p.partido} — ${p.score}%<br>
+<span style="font-size:13px;color:#666;">
+${p.deputados} deputados comparados
+</span>`
+
+listaPartidosMenores.appendChild(li)
 
 })
 
