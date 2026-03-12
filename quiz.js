@@ -161,6 +161,8 @@ mostrarPergunta()
 
 }
 
+
+
 function mostrarResultado(){
 
 document.getElementById("quiz").style.display="none"
@@ -238,53 +240,6 @@ li.innerText = `${d.nome} (${d.partido}-${d.estado}) — ${d.score}%`
 
 lista.appendChild(li)
 
-})
-
-}
-
-}
-
-console.log(dep,"→ comparações:",total,"iguais:",iguais)
-
-if(total >= minimoComparacoes){
-
-console.log("✔ PASSOU NO FILTRO")
-
-let score=Math.round((iguais/total)*100)
-
-ranking.push({
-nome:dep,
-partido:deputado.partido,
-estado:deputado.estado,
-score:score
-})
-
-}else{
-
-console.log("✖ REPROVADO NO FILTRO")
-
-}
-
-}
-
-
-
-ranking.sort((a,b)=>b.score-a.score)
-
-let top=ranking.slice(0,5)
-
-let lista=document.getElementById("ranking-deputados")
-lista.innerHTML=""
-
-if(top.length===0){
-lista.innerHTML="<li>Nenhum deputado teve votos comparáveis suficientes.</li>"
-return
-}
-
-top.forEach(d=>{
-let li=document.createElement("li")
-li.innerText = `${d.nome} (${d.partido}-${d.estado}) — ${d.score}%`
-lista.appendChild(li)
 })
 
 }
