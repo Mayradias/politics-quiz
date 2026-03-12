@@ -6,7 +6,7 @@ let totalPerguntas = 10
 
 let respostasUsuario = {}
 
-let tipoResumo = "objetivo"
+let tipoResumo = "critico"
 
 // NOVO
 let rankingCompletoDeputados = []
@@ -109,7 +109,7 @@ document.getElementById("progresso").style.width = progresso+"%"
 
 let contexto
 
-if(tipoResumo==="critico"){
+if(tipoResumo==="objetivo"){
 
 document.getElementById("resumo").innerText =
 p.resumo_objetivo
