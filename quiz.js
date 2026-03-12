@@ -71,6 +71,7 @@ document.getElementById("placar-abst").classList.remove("placar-destaque")
 
 let p = perguntas[indicePergunta]
 
+document.getElementById("votacao-id").innerText = "ID: " + pegarIdPergunta(p)
 document.getElementById("contador").innerText =
 `Pergunta ${indicePergunta+1} de ${totalPerguntas}`
 
