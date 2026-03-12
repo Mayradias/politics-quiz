@@ -161,22 +161,14 @@ mostrarPergunta()
 
 }
 
-
-
 function mostrarResultado(){
 
 document.getElementById("quiz").style.display="none"
 document.getElementById("resultado").style.display="block"
 
-console.log("Respostas finais:", respostasUsuario)
-
 let ranking=[]
 
 let perguntasRespondidas = Object.keys(respostasUsuario).length
-let minimoComparacoes = perguntasRespondidas * 0.8
-
-console.log("Perguntas respondidas:", perguntasRespondidas)
-console.log("Mínimo exigido (80%):", minimoComparacoes)
 
 for(let dep in votosDeputados){
 
@@ -201,6 +193,52 @@ total++
 if(votoDeputado===respostasUsuario[votacao]){
 iguais++
 }
+
+}
+
+}
+
+if(total / perguntasRespondidas >= 0.8){
+
+let score=Math.round((iguais/perguntasRespondidas)*100)
+
+ranking.push({
+
+nome:dep,
+partido:deputado.partido,
+estado:deputado.estado,
+score:score
+
+})
+
+}
+
+}
+
+ranking.sort((a,b)=>b.score-a.score)
+
+let top=ranking.slice(0,5)
+
+let lista=document.getElementById("ranking-deputados")
+
+lista.innerHTML=""
+
+if(top.length===0){
+
+lista.innerHTML="<li>Nenhum deputado teve votos comparáveis suficientes.</li>"
+return
+
+}
+
+top.forEach(d=>{
+
+let li=document.createElement("li")
+
+li.innerText = `${d.nome} (${d.partido}-${d.estado}) — ${d.score}%`
+
+lista.appendChild(li)
+
+})
 
 }
 
