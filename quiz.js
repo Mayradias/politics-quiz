@@ -111,7 +111,7 @@ let percNao = Math.round((p.nao/total)*100)
 let percAbst = Math.round((p.abst/total)*100)
 
 document.getElementById("placar-sim").innerText =
-`Votação real na Câmara — A favor: ${percSim}%`
+`Votação real na Câmara: — A favor: ${percSim}%`
 
 document.getElementById("placar-nao").innerText =
 `Contra: ${percNao}%`
@@ -243,9 +243,11 @@ top.forEach(d=>{
 
 let li=document.createElement("li")
 
-li.innerText =
-`${d.nome} (${d.partido}-${d.estado}) — ${d.score}% 
-(${d.iguais} de ${perguntasRespondidas} votações iguais)`
+li.innerHTML =
+`${d.nome} (${d.partido}-${d.estado}) — ${d.score}%<br>
+<span style="font-size:13px;color:#666">
+${d.iguais} de ${perguntasRespondidas} votações iguais
+</span>`
 
 lista.appendChild(li)
 
