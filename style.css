@@ -471,3 +471,10 @@ border:1px solid #e5e7eb;
 margin-bottom:12px;
 
 }
+
+.tipo-resumo button.ativo{
+
+background:#2563eb;
+color:white;
+
+}

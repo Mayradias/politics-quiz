@@ -50,8 +50,21 @@ return p.votacao_id || p.id || p.votacao
 
 
 function mudarResumo(tipo){
+
 tipoResumo = tipo
+
+document.querySelectorAll(".tipo-resumo button").forEach(btn=>{
+btn.classList.remove("ativo")
+})
+
+if(tipo==="objetivo"){
+document.querySelectorAll(".tipo-resumo button")[0].classList.add("ativo")
+}else{
+document.querySelectorAll(".tipo-resumo button")[1].classList.add("ativo")
+}
+
 mostrarPergunta()
+
 }
 
 
