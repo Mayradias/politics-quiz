@@ -71,6 +71,17 @@ mostrarPergunta()
 
 function mostrarPergunta(){
 
+// destacar botão do tipo de resumo ativo
+document.querySelectorAll(".tipo-resumo button").forEach(btn=>{
+btn.classList.remove("ativo")
+})
+
+if(tipoResumo==="objetivo"){
+document.querySelectorAll(".tipo-resumo button")[0].classList.add("ativo")
+}else{
+document.querySelectorAll(".tipo-resumo button")[1].classList.add("ativo")
+}
+
 document.getElementById("placar").style.display="none"
 
 document.querySelector(".voto-sim").onclick = ()=>responder("Sim")
@@ -98,7 +109,7 @@ document.getElementById("progresso").style.width = progresso+"%"
 
 let contexto
 
-if(tipoResumo==="objetivo"){
+if(tipoResumo==="critico"){
 
 document.getElementById("resumo").innerText =
 p.resumo_objetivo
@@ -297,8 +308,6 @@ top.forEach((d,i)=>{
 let medalha=""
 
 if(i===0) medalha="🥇"
-if(i===1) medalha="🥈"
-if(i===2) medalha="🥉"
 
 let li=document.createElement("li")
 
@@ -416,8 +425,6 @@ topPartidos.forEach((p,i)=>{
 let medalha=""
 
 if(i===0) medalha="🥇"
-if(i===1) medalha="🥈"
-if(i===2) medalha="🥉"
 
 let li=document.createElement("li")
 
