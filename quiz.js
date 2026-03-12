@@ -71,7 +71,9 @@ document.getElementById("placar-abst").classList.remove("placar-destaque")
 
 let p = perguntas[indicePergunta]
 
-document.getElementById("votacao-id").innerText = "ID: " + pegarIdPergunta(p)
+document.getElementById("votacao-id").innerText =
+"ID: " + pegarIdPergunta(p)
+
 document.getElementById("contador").innerText =
 `Pergunta ${indicePergunta+1} de ${totalPerguntas}`
 
@@ -108,9 +110,14 @@ let percSim = Math.round((p.sim/total)*100)
 let percNao = Math.round((p.nao/total)*100)
 let percAbst = Math.round((p.abst/total)*100)
 
-document.getElementById("placar-sim").innerText = `A favor: ${percSim}%`
-document.getElementById("placar-nao").innerText = `Contra: ${percNao}%`
-document.getElementById("placar-abst").innerText = `Abstenção: ${percAbst}%`
+document.getElementById("placar-sim").innerText =
+`Votação real na Câmara — A favor: ${percSim}%`
+
+document.getElementById("placar-nao").innerText =
+`Contra: ${percNao}%`
+
+document.getElementById("placar-abst").innerText =
+`Abstenção: ${percAbst}%`
 
 }
 
@@ -206,10 +213,13 @@ if(total / perguntasRespondidas >= 0.8){
 let score=Math.round((iguais/perguntasRespondidas)*100)
 
 ranking.push({
+
 nome:dep,
 partido:deputado.partido,
 estado:deputado.estado,
-score:score
+score:score,
+iguais:iguais
+
 })
 
 }
@@ -230,9 +240,15 @@ return
 }
 
 top.forEach(d=>{
+
 let li=document.createElement("li")
-li.innerText = `${d.nome} (${d.partido}-${d.estado}) — ${d.score}%`
+
+li.innerText =
+`${d.nome} (${d.partido}-${d.estado}) — ${d.score}% 
+(${d.iguais} de ${perguntasRespondidas} votações iguais)`
+
 lista.appendChild(li)
+
 })
 
 }
