@@ -88,7 +88,7 @@ e descubra quais parlamentares mais concordam com você
 </button>
 
 <button id="btn-abst" class="voto-abst" onclick="responder('Abstenção')">
-🤷 Indiferente
+🤷 Abstenção
 </button>
 
 </div>
@@ -111,6 +111,7 @@ e descubra quais parlamentares mais concordam com você
 </section>
 
 
+
 <section id="resultado" style="display:none;">
 
 <div class="resultado-card">
@@ -119,7 +120,7 @@ e descubra quais parlamentares mais concordam com você
 
 <div class="bloco-resultado bloco-positivo">
 
-<h2>Mais compatíveis com você</h2>
+<h2>🟢 Mais compatíveis com você</h2>
 
 <div class="grid-resultado">
 
@@ -147,7 +148,7 @@ e descubra quais parlamentares mais concordam com você
 
 <div class="bloco-resultado bloco-negativo">
 
-<h2>Menos compatíveis com você</h2>
+<h2>🔴 Menos compatíveis com você</h2>
 
 <div class="grid-resultado">
 
@@ -169,17 +170,25 @@ e descubra quais parlamentares mais concordam com você
 
 </div>
 
+
+
+<!-- BLOCO METODOLOGIA -->
+
 <div class="info-analise">
 
 <div id="estatisticas-quiz"></div>
 
 <div id="criterios-quiz">
-<b>Critério da comparação:</b><br>
+
+<b>📏 Critério de amostragem</b><br>
+
 Deputados que votaram ao menos 80% das perguntas do seu quiz<br>
 Partidos com ao menos 50% da bancada atendendo o critério anterior
+
 </div>
 
 </div>
+
 
 <button class="botao-reiniciar" onclick="reiniciarQuiz()">
 Fazer outro quiz
