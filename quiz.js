@@ -114,7 +114,7 @@ contexto = p.contexto_critico
 
 }
 
-let frases = contexto.split(". ")
+let frases = contexto.split(". ")   
 
 let html=""
 
@@ -292,12 +292,22 @@ let bottom=rankingAsc.slice(0,5)
 let lista=document.getElementById("ranking-deputados")
 lista.innerHTML=""
 
-top.forEach(d=>{
+top.forEach((d,i)=>{
+
+let medalha=""
+
+if(i===0) medalha="🥇"
+if(i===1) medalha="🥈"
+if(i===2) medalha="🥉"
 
 let li=document.createElement("li")
 
+if(i===0){
+li.classList.add("primeiro-lugar")
+}
+
 li.innerHTML = `
-${d.nome} (${d.partido}-${d.estado}) — ${d.score}%
+${medalha} ${d.nome} (${d.partido}-${d.estado}) — ${d.score}%
 
 <div class="barra-compat">
 <div class="barra-compat-interna" style="width:${d.score}%"></div>
@@ -401,12 +411,22 @@ let bottomPartidos=rankingPartidosAsc.slice(0,5)
 let listaPartidos=document.getElementById("ranking-partidos")
 listaPartidos.innerHTML=""
 
-topPartidos.forEach(p=>{
+topPartidos.forEach((p,i)=>{
+
+let medalha=""
+
+if(i===0) medalha="🥇"
+if(i===1) medalha="🥈"
+if(i===2) medalha="🥉"
 
 let li=document.createElement("li")
 
+if(i===0){
+li.classList.add("primeiro-lugar")
+}
+
 li.innerHTML = `
-${p.partido} — ${p.score}%
+${medalha} ${p.partido} — ${p.score}%
 
 <div class="barra-compat">
 <div class="barra-compat-interna" style="width:${p.score}%"></div>
