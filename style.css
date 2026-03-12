@@ -401,3 +401,73 @@ font-size:15px;
 cursor:pointer;
 
 }
+
+/* ============================ */
+/* BARRA DE COMPATIBILIDADE */
+/* ============================ */
+
+.barra-compat{
+
+height:8px;
+background:#e5e7eb;
+border-radius:6px;
+overflow:hidden;
+margin-top:4px;
+margin-bottom:10px;
+
+}
+
+.barra-compat-interna{
+
+height:8px;
+background:#3b82f6;
+
+}
+
+/* ============================ */
+/* BOTÕES RANKING */
+/* ============================ */
+
+.botoes-ranking{
+
+margin-top:20px;
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+
+}
+
+.botoes-ranking button{
+
+padding:10px 16px;
+border:none;
+border-radius:8px;
+background:#374151;
+color:white;
+cursor:pointer;
+
+}
+
+/* ============================ */
+/* RANKING COMPLETO */
+/* ============================ */
+
+#ranking-completo{
+
+margin-top:30px;
+text-align:left;
+
+background:#f9fafb;
+padding:20px;
+border-radius:10px;
+
+border:1px solid #e5e7eb;
+
+}
+
+.item-ranking{
+
+margin-bottom:12px;
+
+}

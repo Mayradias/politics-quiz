@@ -8,6 +8,9 @@ let respostasUsuario = {}
 
 let tipoResumo = "objetivo"
 
+// NOVO
+let rankingCompletoDeputados = []
+let rankingCompletoPartidos = []
 
 
 async function iniciarQuiz(qtd){
@@ -185,10 +188,6 @@ let perguntasRespondidas = Object.keys(respostasUsuario).length
 
 
 
-// ============================
-// TAMANHO DA BANCADA POR PARTIDO
-// ============================
-
 let bancadaPartidos={}
 
 for(let dep in votosDeputados){
@@ -204,10 +203,6 @@ bancadaPartidos[partido]++
 }
 
 
-
-// ============================
-// CALCULAR COMPATIBILIDADE DEPUTADOS
-// ============================
 
 for(let dep in votosDeputados){
 
@@ -263,6 +258,8 @@ iguais:iguais
 
 ranking.sort((a,b)=>b.score-a.score)
 
+rankingCompletoDeputados = ranking
+
 let top=ranking.slice(0,5)
 
 let rankingAsc=[...ranking].sort((a,b)=>a.score-b.score)
@@ -271,10 +268,6 @@ let bottom=rankingAsc.slice(0,5)
 
 
 
-// ============================
-// MOSTRAR DEPUTADOS
-// ============================
-
 let lista=document.getElementById("ranking-deputados")
 lista.innerHTML=""
 
@@ -282,11 +275,17 @@ top.forEach(d=>{
 
 let li=document.createElement("li")
 
-li.innerHTML =
-`${d.nome} (${d.partido}-${d.estado}) — ${d.score}%<br>
+li.innerHTML = `
+${d.nome} (${d.partido}-${d.estado}) — ${d.score}%
+
+<div class="barra-compat">
+<div class="barra-compat-interna" style="width:${d.score}%"></div>
+</div>
+
 <span style="font-size:13px;color:#666;">
 ${d.iguais} de ${perguntasRespondidas} votações iguais
-</span>`
+</span>
+`
 
 lista.appendChild(li)
 
@@ -301,21 +300,23 @@ bottom.forEach(d=>{
 
 let li=document.createElement("li")
 
-li.innerHTML =
-`${d.nome} (${d.partido}-${d.estado}) — ${d.score}%<br>
+li.innerHTML = `
+${d.nome} (${d.partido}-${d.estado}) — ${d.score}%
+
+<div class="barra-compat">
+<div class="barra-compat-interna" style="width:${d.score}%"></div>
+</div>
+
 <span style="font-size:13px;color:#666;">
 ${d.iguais} de ${perguntasRespondidas} votações iguais
-</span>`
+</span>
+`
 
 listaMenores.appendChild(li)
 
 })
 
 
-
-// ============================
-// CALCULAR PARTIDOS
-// ============================
 
 let partidos={}
 
@@ -366,6 +367,8 @@ deputados:comparados
 
 rankingPartidos.sort((a,b)=>b.score-a.score)
 
+rankingCompletoPartidos = rankingPartidos
+
 let topPartidos=rankingPartidos.slice(0,5)
 
 let rankingPartidosAsc=[...rankingPartidos].sort((a,b)=>a.score-b.score)
@@ -374,10 +377,6 @@ let bottomPartidos=rankingPartidosAsc.slice(0,5)
 
 
 
-// ============================
-// MOSTRAR PARTIDOS
-// ============================
-
 let listaPartidos=document.getElementById("ranking-partidos")
 listaPartidos.innerHTML=""
 
@@ -385,11 +384,17 @@ topPartidos.forEach(p=>{
 
 let li=document.createElement("li")
 
-li.innerHTML=
-`${p.partido} — ${p.score}%<br>
+li.innerHTML = `
+${p.partido} — ${p.score}%
+
+<div class="barra-compat">
+<div class="barra-compat-interna" style="width:${p.score}%"></div>
+</div>
+
 <span style="font-size:13px;color:#666;">
 ${p.deputados} deputados comparados
-</span>`
+</span>
+`
 
 listaPartidos.appendChild(li)
 
@@ -404,21 +409,23 @@ bottomPartidos.forEach(p=>{
 
 let li=document.createElement("li")
 
-li.innerHTML=
-`${p.partido} — ${p.score}%<br>
+li.innerHTML = `
+${p.partido} — ${p.score}%
+
+<div class="barra-compat">
+<div class="barra-compat-interna" style="width:${p.score}%"></div>
+</div>
+
 <span style="font-size:13px;color:#666;">
 ${p.deputados} deputados comparados
-</span>`
+</span>
+`
 
 listaPartidosMenores.appendChild(li)
 
 })
 
 
-
-// ============================
-// ESTATÍSTICAS
-// ============================
 
 document.getElementById("estatisticas-quiz").innerHTML =
 `<b>📊 Estatísticas da análise</b><br><br>
@@ -430,6 +437,79 @@ Partidos analisados: ${partidosNoBanco}<br>
 Partidos com amostragem suficiente: ${partidosValidos}`
 
 }
+
+
+
+function mostrarRankingCompletoPartidos(){
+
+let div=document.getElementById("ranking-completo")
+
+div.style.display="block"
+
+let html="<h3>Ranking completo de partidos</h3>"
+
+rankingCompletoPartidos.forEach(p=>{
+
+html+=`
+
+<div class="item-ranking">
+
+${p.partido} — ${p.score}%
+
+<div class="barra-compat">
+<div class="barra-compat-interna" style="width:${p.score}%"></div>
+</div>
+
+<span style="font-size:13px;color:#666;">
+${p.deputados} deputados comparados
+</span>
+
+</div>
+
+`
+
+})
+
+div.innerHTML=html
+
+}
+
+
+
+function mostrarRankingCompletoDeputados(){
+
+let div=document.getElementById("ranking-completo")
+
+div.style.display="block"
+
+let html="<h3>Ranking completo de deputados</h3>"
+
+rankingCompletoDeputados.forEach(d=>{
+
+html+=`
+
+<div class="item-ranking">
+
+${d.nome} (${d.partido}-${d.estado}) — ${d.score}%
+
+<div class="barra-compat">
+<div class="barra-compat-interna" style="width:${d.score}%"></div>
+</div>
+
+<span style="font-size:13px;color:#666;">
+${d.iguais} votações iguais
+</span>
+
+</div>
+
+`
+
+})
+
+div.innerHTML=html
+
+}
+
 
 
 function reiniciarQuiz(){
