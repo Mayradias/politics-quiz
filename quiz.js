@@ -96,17 +96,25 @@ document.getElementById("contador").innerText =
 let progresso = (indicePergunta/totalPerguntas)*100
 document.getElementById("progresso").style.width = progresso+"%"
 
-
+let contexto
 
 if(tipoResumo==="objetivo"){
-document.getElementById("resumo").innerText = p.resumo_objetivo || p.resumo
+
+document.getElementById("resumo").innerText =
+p.resumo_objetivo
+
+contexto = p.contexto_objetivo
+
 }else{
-document.getElementById("resumo").innerText = p.resumo_critico || p.resumo
+
+document.getElementById("resumo").innerText =
+p.resumo_critico
+
+contexto = p.contexto_critico
+
 }
 
-
-
-let frases = p.contexto.split(". ")
+let frases = contexto.split(". ")
 
 let html=""
 
