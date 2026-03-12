@@ -233,18 +233,19 @@ iguais:iguais
 
 }
 
+
+
 ranking.sort((a,b)=>b.score-a.score)
 
+
+
 let top=ranking.slice(0,5)
+let bottom=ranking.slice(-5).reverse()
+
+
 
 let lista=document.getElementById("ranking-deputados")
-
 lista.innerHTML=""
-
-if(top.length===0){
-lista.innerHTML="<li>Nenhum deputado teve votos comparáveis suficientes.</li>"
-return
-}
 
 top.forEach(d=>{
 
@@ -252,11 +253,30 @@ let li=document.createElement("li")
 
 li.innerHTML =
 `${d.nome} (${d.partido}-${d.estado}) — ${d.score}%<br>
-<span style="font-size:13px;color:#666; margin-left:4px;">
+<span style="font-size:13px;color:#666;">
 ${d.iguais} de ${perguntasRespondidas} votações iguais
 </span>`
 
 lista.appendChild(li)
+
+})
+
+
+
+let listaMenores=document.getElementById("ranking-deputados-menores")
+listaMenores.innerHTML=""
+
+bottom.forEach(d=>{
+
+let li=document.createElement("li")
+
+li.innerHTML =
+`${d.nome} (${d.partido}-${d.estado}) — ${d.score}%<br>
+<span style="font-size:13px;color:#666;">
+${d.iguais} de ${perguntasRespondidas} votações iguais
+</span>`
+
+listaMenores.appendChild(li)
 
 })
 
