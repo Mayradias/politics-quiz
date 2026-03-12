@@ -111,7 +111,7 @@ let percNao = Math.round((p.nao/total)*100)
 let percAbst = Math.round((p.abst/total)*100)
 
 document.getElementById("placar-sim").innerText =
-`Votação real na Câmara: — A favor: ${percSim}%`
+`A favor: ${percSim}%`
 
 document.getElementById("placar-nao").innerText =
 `Contra: ${percNao}%`
@@ -178,9 +178,14 @@ document.getElementById("resultado").style.display="block"
 
 let ranking=[]
 
+let deputadosAnalisados = 0
+let deputadosValidos = 0
+
 let perguntasRespondidas = Object.keys(respostasUsuario).length
 
 for(let dep in votosDeputados){
+
+deputadosAnalisados++
 
 let deputado=votosDeputados[dep]
 let votos=deputado.votos
@@ -209,6 +214,8 @@ iguais++
 }
 
 if(total / perguntasRespondidas >= 0.8){
+
+deputadosValidos++
 
 let score=Math.round((iguais/perguntasRespondidas)*100)
 
@@ -245,13 +252,19 @@ let li=document.createElement("li")
 
 li.innerHTML =
 `${d.nome} (${d.partido}-${d.estado}) — ${d.score}%<br>
-<span style="font-size:13px;color:#666">
+<span style="font-size:13px;color:#666; margin-left:4px;">
 ${d.iguais} de ${perguntasRespondidas} votações iguais
 </span>`
 
 lista.appendChild(li)
 
 })
+
+
+
+document.getElementById("estatisticas-quiz").innerHTML =
+`Deputados analisados: ${deputadosAnalisados}<br>
+Deputados com votos suficientes: ${deputadosValidos}`
 
 }
 
