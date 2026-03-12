@@ -167,10 +167,6 @@ respostasUsuario[id]=voto
 
 console.log("Resposta registrada:", id, voto)
 
-document.querySelectorAll(".opcoes button").forEach(btn=>{
-btn.onclick = null
-})
-
 if(voto==="Sim"){
 document.querySelector(".voto-sim").classList.add("selecionado")
 document.getElementById("placar-sim").classList.add("placar-destaque")
