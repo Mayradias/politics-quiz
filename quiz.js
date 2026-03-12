@@ -185,6 +185,30 @@ let perguntasRespondidas = Object.keys(respostasUsuario).length
 
 
 
+// ============================
+// TAMANHO DA BANCADA POR PARTIDO
+// ============================
+
+let bancadaPartidos={}
+
+for(let dep in votosDeputados){
+
+let partido=votosDeputados[dep].partido
+
+if(!bancadaPartidos[partido]){
+bancadaPartidos[partido]=0
+}
+
+bancadaPartidos[partido]++
+
+}
+
+
+
+// ============================
+// CALCULAR COMPATIBILIDADE DEPUTADOS
+// ============================
+
 for(let dep in votosDeputados){
 
 deputadosAnalisados++
@@ -238,8 +262,6 @@ iguais:iguais
 
 
 ranking.sort((a,b)=>b.score-a.score)
-
-
 
 let top=ranking.slice(0,5)
 
@@ -308,21 +330,39 @@ partidos[d.partido].total++
 
 })
 
+
+
 let rankingPartidos=[]
+
+let partidosNoBanco=Object.keys(bancadaPartidos).length
+let partidosValidos=0
+
+
 
 for(let p in partidos){
 
-let media=Math.round(partidos[p].soma/partidos[p].total)
+let comparados=partidos[p].total
+let bancada=bancadaPartidos[p]
+
+if(comparados / bancada >= 0.5){
+
+partidosValidos++
+
+let media=Math.round(partidos[p].soma/comparados)
 
 rankingPartidos.push({
 
 partido:p,
 score:media,
-deputados:partidos[p].total
+deputados:comparados
 
 })
 
 }
+
+}
+
+
 
 rankingPartidos.sort((a,b)=>b.score-a.score)
 
@@ -376,9 +416,15 @@ listaPartidosMenores.appendChild(li)
 
 
 
+// ============================
+// ESTATÍSTICAS
+// ============================
+
 document.getElementById("estatisticas-quiz").innerHTML =
 `Deputados analisados: ${deputadosAnalisados}<br>
-Deputados com votos suficientes: ${deputadosValidos}`
+Deputados com votos suficientes: ${deputadosValidos}<br><br>
+Partidos no banco de dados: ${partidosNoBanco}<br>
+Partidos com % mínima para a análise feita: ${partidosValidos}`
 
 }
 
