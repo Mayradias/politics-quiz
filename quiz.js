@@ -421,13 +421,15 @@ listaPartidosMenores.appendChild(li)
 // ============================
 
 document.getElementById("estatisticas-quiz").innerHTML =
-`Deputados analisados: ${deputadosAnalisados}<br>
+`<b>📊 Estatísticas da análise</b><br><br>
+
+Deputados analisados: ${deputadosAnalisados}<br>
 Deputados com amostragem suficiente: ${deputadosValidos}<br><br>
+
 Partidos analisados: ${partidosNoBanco}<br>
 Partidos com amostragem suficiente: ${partidosValidos}`
 
 }
-
 
 
 function reiniciarQuiz(){
