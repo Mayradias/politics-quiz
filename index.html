@@ -1,136 +1,66 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-
-<head>
-
-<meta charset="UTF-8">
-<title>Quiz político</title>
-
-<link rel="stylesheet" href="style.css">
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-</head>
-
-<body>
-
-<div class="container">
-
-<header id="header-inicial">
-
-<h1>
-Responda votações reais da Câmara dos Deputados
-e descubra quais parlamentares mais concordam com você
-</h1>
-
-</header>
-
-
-<section id="menu-quiz">
-
-<h2>Escolha o quiz que deseja fazer</h2>
-
-<div class="quiz-opcoes">
-
-<button class="botao-quiz" onclick="iniciarQuiz(5)">
-⚡ Quiz rápido<br>
-<span>5 perguntas</span>
-</button>
-
-<button class="botao-quiz" onclick="iniciarQuiz(10)">
-🧠 Quiz médio<br>
-<span>10 perguntas</span>
-</button>
-
-<button class="botao-quiz" onclick="iniciarQuiz(15)">
-🏛 Quiz completo<br>
-<span>15 perguntas</span>
-</button>
-
-</div>
-
-</section>
-
-
-
-<section id="quiz" style="display:none;">
-
-<div class="quiz-card">
-
-<div id="votacao-id"></div>
-
-<div id="contador"></div>
-
-<div class="barra">
-<div id="progresso"></div>
-</div>
-
-<div class="tipo-resumo">
-
-<button onclick="mudarResumo('objetivo')">Resumo objetivo</button>
-<button onclick="mudarResumo('critico')">Resumo crítico</button>
-
-</div>
-
-<div class="resumo-box" id="resumo"></div>
-
-<div class="contexto-box" id="contexto"></div>
-
-
-<div class="opcoes">
-
-<button id="btn-sim" class="voto-sim" onclick="responder('Sim')">
-👍 A favor
-</button>
-
-<button id="btn-nao" class="voto-nao" onclick="responder('Não')">
-👎 Contra
-</button>
-
-<button id="btn-abst" class="voto-abst" onclick="responder('Abstenção')">
-🤷 Indiferente
-</button>
-
-</div>
-
-
-<div class="placar" id="placar" style="display:none;">
-
-<p>Resultado da votação na Câmara:</p>
-
-<div id="placar-sim"></div>
-<div id="placar-nao"></div>
-<div id="placar-abst"></div>
-
-<button id="proxima" onclick="proximaPergunta()">➡ Próxima</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-
 <section id="resultado" style="display:none;">
 
 <div class="resultado-card">
 
-<h3>Partidos que mais votam como você</h3>
+<!-- BLOCO COMPATÍVEIS -->
 
+<div class="bloco-resultado bloco-positivo">
+
+<h2>Mais compatíveis com você</h2>
+
+<div class="grid-resultado">
+
+<div>
+
+<h3>Partidos</h3>
 <ol id="ranking-partidos"></ol>
 
-<h3 style="margin-top:30px;">Partidos que menos votam como você</h3>
+</div>
 
+<div>
+
+<h3>Deputados</h3>
+<ol id="ranking-deputados"></ol>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- BLOCO INCOMPATÍVEIS -->
+
+<div class="bloco-resultado bloco-negativo">
+
+<h2>Menos compatíveis com você</h2>
+
+<div class="grid-resultado">
+
+<div>
+
+<h3>Partidos</h3>
 <ol id="ranking-partidos-menores"></ol>
 
-<h3>Deputados que mais votaram como você</h3>
+</div>
 
-<ol id="ranking-deputados"></ol>
-<div id="estatisticas-quiz" style="margin-top:20px;font-size:14px;color:#666;"></div>
+<div>
 
-<h3 style="margin-top:30px;">Deputados que menos votaram como você</h3>
+<h3>Deputados</h3>
 <ol id="ranking-deputados-menores"></ol>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<div id="estatisticas-quiz"
+style="margin-top:25px;font-size:14px;color:#666;">
+</div>
 
 <button class="botao-reiniciar" onclick="reiniciarQuiz()">
 Fazer outro quiz
@@ -139,10 +69,3 @@ Fazer outro quiz
 </div>
 
 </section>
-
-</div>
-
-<script src="quiz.js"></script>
-
-</body>
-</html>
