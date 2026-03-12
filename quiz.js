@@ -205,12 +205,10 @@ if(total / perguntasRespondidas >= 0.8){
 let score=Math.round((iguais/perguntasRespondidas)*100)
 
 ranking.push({
-
 nome:dep,
 partido:deputado.partido,
 estado:deputado.estado,
 score:score
-
 })
 
 }
@@ -226,20 +224,14 @@ let lista=document.getElementById("ranking-deputados")
 lista.innerHTML=""
 
 if(top.length===0){
-
 lista.innerHTML="<li>Nenhum deputado teve votos comparáveis suficientes.</li>"
 return
-
 }
 
 top.forEach(d=>{
-
 let li=document.createElement("li")
-
 li.innerText = `${d.nome} (${d.partido}-${d.estado}) — ${d.score}%`
-
 lista.appendChild(li)
-
 })
 
 }
