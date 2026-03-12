@@ -160,6 +160,11 @@ document.getElementById("placar-abst").innerText =
 
 function responder(voto){
 
+// limpar seleção anterior
+document.querySelectorAll(".opcoes button").forEach(btn=>{
+btn.classList.remove("selecionado")
+})
+
 let p = perguntas[indicePergunta]
 let id = pegarIdPergunta(p)
 
