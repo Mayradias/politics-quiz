@@ -1,3 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+<title>Quiz político</title>
+
+<link rel="stylesheet" href="style.css">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<header id="header-inicial">
+
+<h1>
+Responda votações reais da Câmara dos Deputados
+e descubra quais parlamentares mais concordam com você
+</h1>
+
+</header>
+
+
+<section id="menu-quiz">
+
+<h2>Escolha o quiz que deseja fazer</h2>
+
+<div class="quiz-opcoes">
+
+<button class="botao-quiz" onclick="iniciarQuiz(5)">
+⚡ Quiz rápido<br>
+<span>5 perguntas</span>
+</button>
+
+<button class="botao-quiz" onclick="iniciarQuiz(10)">
+🧠 Quiz médio<br>
+<span>10 perguntas</span>
+</button>
+
+<button class="botao-quiz" onclick="iniciarQuiz(15)">
+🏛 Quiz completo<br>
+<span>15 perguntas</span>
+</button>
+
+</div>
+
+</section>
+
+
+
+<section id="quiz" style="display:none;">
+
+<div class="quiz-card">
+
+<div id="votacao-id"></div>
+
+<div id="contador"></div>
+
+<div class="barra">
+<div id="progresso"></div>
+</div>
+
+<div class="tipo-resumo">
+
+<button onclick="mudarResumo('objetivo')">Resumo objetivo</button>
+<button onclick="mudarResumo('critico')">Resumo crítico</button>
+
+</div>
+
+<div class="resumo-box" id="resumo"></div>
+
+<div class="contexto-box" id="contexto"></div>
+
+
+<div class="opcoes">
+
+<button id="btn-sim" class="voto-sim" onclick="responder('Sim')">
+👍 A favor
+</button>
+
+<button id="btn-nao" class="voto-nao" onclick="responder('Não')">
+👎 Contra
+</button>
+
+<button id="btn-abst" class="voto-abst" onclick="responder('Abstenção')">
+🤷 Indiferente
+</button>
+
+</div>
+
+
+<div class="placar" id="placar" style="display:none;">
+
+<p>Resultado da votação na Câmara:</p>
+
+<div id="placar-sim"></div>
+<div id="placar-nao"></div>
+<div id="placar-abst"></div>
+
+<button id="proxima" onclick="proximaPergunta()">➡ Próxima</button>
+
+</div>
+
+</div>
+
+</section>
+
+
 <section id="resultado" style="display:none;">
 
 <div class="resultado-card">
@@ -69,3 +182,10 @@ Fazer outro quiz
 </div>
 
 </section>
+
+</div>
+
+<script src="quiz.js"></script>
+
+</body>
+</html>
