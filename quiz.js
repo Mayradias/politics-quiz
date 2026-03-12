@@ -422,9 +422,9 @@ listaPartidosMenores.appendChild(li)
 
 document.getElementById("estatisticas-quiz").innerHTML =
 `Deputados analisados: ${deputadosAnalisados}<br>
-Deputados com votos suficientes: ${deputadosValidos}<br><br>
-Partidos no banco de dados: ${partidosNoBanco}<br>
-Partidos com % mínima para a análise feita: ${partidosValidos}`
+Deputados comparáveis: ${deputadosValidos}<br><br>
+Partidos analisados: ${partidosNoBanco}<br>
+Partidos comparáveis: ${partidosValidos}`
 
 }
 
