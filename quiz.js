@@ -502,13 +502,13 @@ div.style.display="block"
 
 let html="<h3>Ranking completo de partidos</h3>"
 
-rankingCompletoPartidos.forEach(p=>{
+rankingCompletoPartidos.forEach((p,i)=>{
 
 html+=`
 
 <div class="item-ranking">
 
-${p.partido} — ${p.score}%
+${i+1}. ${p.partido} — ${p.score}%
 
 <div class="barra-compat">
 <div class="barra-compat-interna" style="width:${p.score}%"></div>
@@ -538,13 +538,13 @@ div.style.display="block"
 
 let html="<h3>Ranking completo de deputados</h3>"
 
-rankingCompletoDeputados.forEach(d=>{
+rankingCompletoDeputados.forEach((d,i)=>{
 
 html+=`
 
 <div class="item-ranking">
 
-${d.nome} (${d.partido}-${d.estado}) — ${d.score}%
+${i+1}. ${d.nome} (${d.partido}-${d.estado}) — ${d.score}%
 
 <div class="barra-compat">
 <div class="barra-compat-interna" style="width:${d.score}%"></div>
