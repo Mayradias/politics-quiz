@@ -481,7 +481,7 @@ li.classList.add("primeiro-lugar")
 
 li.innerHTML = `
 ${medalha} 
-<span class="nome-deputado" onclick="mostrarProjetosDeputado('${d.nome}')">
+<span class="nome-deputado" onclick="mostrarProjetosDeputado('${d.nome}','mais')">
 ${d.nome}
 </span>
 (${d.partido}-${d.estado}) — ${d.score}%
@@ -512,7 +512,7 @@ bottom.forEach(d=>{
 let li=document.createElement("li")
 
 li.innerHTML = `
-<span class="nome-deputado" onclick="mostrarProjetosDeputado('${d.nome}')">
+<span class="nome-deputado" onclick="mostrarProjetosDeputado('${d.nome}','menos')">
 ${d.nome}
 </span>
 (${d.partido}-${d.estado}) — ${d.score}%
@@ -798,14 +798,11 @@ carregarResultadoURL()
 EXIBIR PROJETOS DE UM DEPUTADO
 ===================================================== */
 
-function mostrarProjetosDeputado(nome){
+function mostrarProjetosDeputado(nome,tipo){
 
 let container
 
-let listaMais = document.getElementById("ranking-deputados")
-let nomesMais = Array.from(listaMais.querySelectorAll(".nome-deputado")).map(x=>x.innerText)
-
-if(nomesMais.includes(nome)){
+if(tipo==="mais"){
 container = document.getElementById("projetos-deputado-mais")
 }else{
 container = document.getElementById("projetos-deputado-menos")
