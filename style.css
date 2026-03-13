@@ -609,3 +609,10 @@ justify-content:center;
 flex-wrap:wrap;
 
 }
+
+.nome-partido{
+
+cursor:pointer;
+color:#2563eb;
+
+}
