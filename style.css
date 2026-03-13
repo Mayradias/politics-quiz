@@ -31,18 +31,35 @@ HEADER / TÍTULO PRINCIPAL
 header{
 
 margin-top:60px;
-margin-bottom:140px;
+margin-bottom:110px;
 
 }
 
 h1{
 
-font-size:30px;
-line-height:1.4;
-font-weight:600;
+font-size:36px;
+line-height:1.25;
+font-weight:700;
+letter-spacing:-0.3px;
+max-width:650px;
+margin-left:auto;
+margin-right:auto;
 
 }
 
+.subtitulo{
+
+font-size:20px;
+color:#444;
+margin-top:12px;
+line-height:1.5;
+font-weight:500;
+
+max-width:620px;
+margin-left:auto;
+margin-right:auto;
+
+}
 
 
 /* =====================================================
