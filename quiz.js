@@ -100,6 +100,20 @@ INÍCIO DO QUIZ
 Carrega datasets e seleciona perguntas
 ===================================================== */
 
+function selecionarQuiz(botao,qtd){
+
+document.querySelectorAll(".botao-quiz").forEach(b=>{
+b.classList.remove("selecionado")
+})
+
+botao.classList.add("selecionado")
+
+setTimeout(()=>{
+iniciarQuiz(qtd)
+},300)
+
+}
+
 async function iniciarQuiz(qtd){
 
 totalPerguntas = qtd

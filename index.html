@@ -3,6 +3,10 @@
 
 <head>
 
+<!-- =========================
+HEAD / CONFIGURAÇÕES GERAIS
+========================= -->
+
 <meta charset="UTF-8">
 <title>Quiz político</title>
 
@@ -16,6 +20,10 @@
 
 <div class="container">
 
+<!-- =========================
+HEADER / APRESENTAÇÃO DO SITE
+========================= -->
+
 <header id="header-inicial">
 
 <h1>
@@ -26,23 +34,28 @@ e descubra com quais parlamentares você mais se alinha
 </header>
 
 
+<!-- =========================
+MENU INICIAL DO QUIZ
+ESCOLHA DE QUANTIDADE DE PERGUNTAS
+========================= -->
+
 <section id="menu-quiz">
 
 <h2>Escolha o quiz que deseja fazer</h2>
 
 <div class="quiz-opcoes">
 
-<button class="botao-quiz" onclick="iniciarQuiz(5)">
+<button class="botao-quiz" onclick="selecionarQuiz(this,5)">
 ⚡ Quiz rápido<br>
 <span>5 perguntas</span>
 </button>
 
-<button class="botao-quiz" onclick="iniciarQuiz(10)">
+<button class="botao-quiz" onclick="selecionarQuiz(this,10)">
 🧠 Quiz médio<br>
 <span>10 perguntas</span>
 </button>
 
-<button class="botao-quiz" onclick="iniciarQuiz(15)">
+<button class="botao-quiz" onclick="selecionarQuiz(this,15)">
 🏛 Quiz completo<br>
 <span>15 perguntas</span>
 </button>
@@ -53,17 +66,30 @@ e descubra com quais parlamentares você mais se alinha
 
 
 
+<!-- =========================
+ÁREA DO QUIZ
+PERGUNTAS E RESPOSTAS
+========================= -->
+
 <section id="quiz" style="display:none;">
 
 <div class="quiz-card">
 
+<!-- ID DA VOTAÇÃO -->
+
 <div id="votacao-id"></div>
 
+<!-- CONTADOR DE PERGUNTAS -->
+
 <div id="contador"></div>
+
+<!-- BARRA DE PROGRESSO -->
 
 <div class="barra">
 <div id="progresso"></div>
 </div>
+
+<!-- SELETOR DE TIPO DE RESUMO -->
 
 <div class="tipo-resumo">
 
@@ -72,12 +98,22 @@ e descubra com quais parlamentares você mais se alinha
 
 </div>
 
+<!-- RESUMO DA PROPOSIÇÃO -->
+
 <div class="resumo-box" id="resumo"></div>
+
+<!-- LINK PARA ÍNTEGRA DO PROJETO -->
+
 <a id="link-integra" class="link-integra" target="_blank" rel="noopener">
 📄 Ler íntegra do projeto
 </a>
+
+<!-- CONTEXTO DA PROPOSIÇÃO -->
+
 <div class="contexto-box" id="contexto"></div>
 
+
+<!-- BOTÕES DE VOTO DO USUÁRIO -->
 
 <div class="opcoes">
 
@@ -95,6 +131,8 @@ e descubra com quais parlamentares você mais se alinha
 
 </div>
 
+
+<!-- RESULTADO DA VOTAÇÃO DA CÂMARA -->
 
 <div class="placar" id="placar" style="display:none;">
 
@@ -114,17 +152,26 @@ e descubra com quais parlamentares você mais se alinha
 
 
 
+<!-- =========================
+TELA FINAL DE RESULTADO
+COMPATIBILIDADE POLÍTICA
+========================= -->
+
 <section id="resultado" style="display:none;">
 
 <div class="resultado-card">
 
-<!-- BLOCO COMPATÍVEIS -->
+<!-- =========================
+BLOCO: MAIS COMPATÍVEIS
+========================= -->
 
 <div class="bloco-resultado bloco-positivo">
 
 <h2>🟢 Mais compatíveis com você</h2>
 
 <div class="grid-resultado">
+
+<!-- RANKING DE PARTIDOS -->
 
 <div>
 
@@ -133,10 +180,14 @@ e descubra com quais parlamentares você mais se alinha
 
 </div>
 
+<!-- RANKING DE DEPUTADOS -->
+
 <div>
 
 <h3>Deputados</h3>
 <ol id="ranking-deputados" start="2"></ol>
+
+<!-- LISTA DE PROJETOS DO DEPUTADO -->
 
 <div id="projetos-deputado" class="projetos-deputado"></div>
 
@@ -148,7 +199,9 @@ e descubra com quais parlamentares você mais se alinha
 
 
 
-<!-- BLOCO INCOMPATÍVEIS -->
+<!-- =========================
+BLOCO: MENOS COMPATÍVEIS
+========================= -->
 
 <div class="bloco-resultado bloco-negativo">
 
@@ -156,12 +209,16 @@ e descubra com quais parlamentares você mais se alinha
 
 <div class="grid-resultado">
 
+<!-- RANKING DE PARTIDOS -->
+
 <div>
 
 <h3>Partidos</h3>
 <ol id="ranking-partidos-menores"></ol>
 
 </div>
+
+<!-- RANKING DE DEPUTADOS -->
 
 <div>
 
@@ -174,7 +231,9 @@ e descubra com quais parlamentares você mais se alinha
 
 </div>
 
-<!-- BOTÕES DE RANKING COMPLETO (INSERIR AQUI) -->
+<!-- =========================
+BOTÕES DE RANKING COMPLETO
+========================= -->
 
 <div class="botoes-ranking">
 
@@ -188,18 +247,27 @@ e descubra com quais parlamentares você mais se alinha
 
 </div>
 
+<!-- ÁREA ONDE O RANKING COMPLETO É RENDERIZADO -->
+
 <div id="ranking-completo" style="display:none;"></div>
 
 
-<!-- BLOCO METODOLOGIA -->
+<!-- =========================
+BLOCO DE METODOLOGIA
+ESTATÍSTICAS E CRITÉRIOS
+========================= -->
 
 <div class="info-analise">
+
+<!-- ESTATÍSTICAS DO QUIZ -->
 
 <div id="estatisticas-quiz">
 
 <b>📊 Estatísticas da análise</b><br><br>
 
 </div>
+
+<!-- CRITÉRIOS DE AMOSTRAGEM -->
 
 <div id="criterios-quiz">
 
@@ -211,6 +279,8 @@ Partidos com ao menos 50% da bancada atendendo o critério anterior
 </div>
 
 </div>
+
+<!-- BOTÕES FINAIS -->
 
 <button class="botao-reiniciar" onclick="reiniciarQuiz()">
 Fazer outro quiz
@@ -225,6 +295,10 @@ Fazer outro quiz
 </section>
 
 </div>
+
+<!-- =========================
+SCRIPT PRINCIPAL DO QUIZ
+========================= -->
 
 <script src="quiz.js"></script>
 
