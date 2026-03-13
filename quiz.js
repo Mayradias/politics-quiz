@@ -923,7 +923,7 @@ let html = `<h3>Projetos de deputados do ${partido}</h3>`
 
 if(projetos.length === 0){
 
-html += "<p>Nenhum projeto encontrado no banco do quiz.</p>"
+html += "<p>Nenhum projeto encontrado no banco de dados do quiz.</p>"
 
 container.innerHTML = html
 return
