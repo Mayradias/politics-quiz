@@ -1,7 +1,7 @@
 let perguntas = []
 let todasPerguntas = []
 let votosDeputados = {}
-
+let todosProjetos = []
 let indicePergunta = 0
 let totalPerguntas = 10
 
@@ -87,9 +87,10 @@ document.getElementById("header-inicial").style.display="none"
 document.getElementById("quiz").style.display="flex"
 
 todasPerguntas = await fetch("data/8_perguntas.json").then(r=>r.json())
-perguntas = [...todasPerguntas]
+todosProjetos = await fetch("data/11_projetos.json").then(r=>r.json())
 
 perguntas = [...todasPerguntas]
+
 votosDeputados = await fetch("data/9_votos_deputados.json").then(r=>r.json())
 
 console.log("Perguntas carregadas:", perguntas.length)
@@ -718,7 +719,7 @@ let container = document.getElementById("projetos-deputado")
 // limpar conteúdo anterior
 container.innerHTML = ""
 
-let projetos = todasPerguntas.filter(p => p.autor === nome)
+let projetos = todosProjetos.filter(p => p.autor === nome)
 
 let html = `<h3>Projetos de ${nome}</h3>`
 
