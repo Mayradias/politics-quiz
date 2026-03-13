@@ -814,7 +814,17 @@ document.getElementById("projetos-deputado-menos").innerHTML=""
 // limpar conteúdo anterior
 container.innerHTML = ""
 
-let projetos = todosProjetos.filter(p => p.autor === nome)
+let projetos = todosProjetos.filter(p => {
+
+let autor = p.autor
+
+if(autor.includes(" - ")){
+autor = autor.split(" - ")[1]
+}
+
+return autor === nome
+
+})
 
 let html = `<h3>Projetos de ${nome}</h3>`
 
