@@ -800,7 +800,19 @@ EXIBIR PROJETOS DE UM DEPUTADO
 
 function mostrarProjetosDeputado(nome){
 
-let container = document.getElementById("projetos-deputado")
+let container
+
+let listaMais = document.getElementById("ranking-deputados")
+let nomesMais = Array.from(listaMais.querySelectorAll(".nome-deputado")).map(x=>x.innerText)
+
+if(nomesMais.includes(nome)){
+container = document.getElementById("projetos-deputado-mais")
+}else{
+container = document.getElementById("projetos-deputado-menos")
+}
+
+document.getElementById("projetos-deputado-mais").innerHTML=""
+document.getElementById("projetos-deputado-menos").innerHTML=""
 
 // limpar conteúdo anterior
 container.innerHTML = ""
