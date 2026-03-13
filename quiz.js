@@ -98,6 +98,8 @@ document.getElementById("placar-abst").classList.remove("placar-destaque")
 
 let p = perguntas[indicePergunta]
 
+document.getElementById("link-integra").href = p.url_integra
+
 document.getElementById("votacao-id").innerText =
 "ID: " + pegarIdPergunta(p)
 
