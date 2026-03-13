@@ -1,3 +1,8 @@
+/* =====================================================
+VARIÁVEIS GLOBAIS
+Controle do quiz e datasets carregados
+===================================================== */
+
 let perguntas = []
 let todasPerguntas = []
 let votosDeputados = {}
@@ -12,6 +17,12 @@ let tipoResumo = "critico"
 // NOVO
 let rankingCompletoDeputados = []
 let rankingCompletoPartidos = []
+
+
+/* =====================================================
+CARREGAMENTO DE RESULTADO VIA URL
+Permite compartilhar resultado do quiz
+===================================================== */
 
 function carregarResultadoURL(){
 
@@ -40,6 +51,12 @@ console.log("Erro ao carregar resultado")
 }
 
 }
+
+
+/* =====================================================
+RENDERIZAÇÃO DE RANKING COMPARTILHADO
+Usado quando resultado vem via URL
+===================================================== */
 
 function renderRankingCompartilhado(d){
 
@@ -78,13 +95,21 @@ gerarLista(d.bottomPartidos)
 }
 
 
+/* =====================================================
+INÍCIO DO QUIZ
+Carrega datasets e seleciona perguntas
+===================================================== */
+
 async function iniciarQuiz(qtd){
 
 totalPerguntas = qtd
 
 document.getElementById("menu-quiz").style.display="none"
 document.getElementById("header-inicial").style.display="none"
+
+setTimeout(()=>{
 document.getElementById("quiz").style.display="flex"
+},300)
 
 todasPerguntas = await fetch("data/8_perguntas.json").then(r=>r.json())
 todosProjetos = await fetch("data/11_projetos.json").then(r=>r.json())
@@ -134,18 +159,23 @@ mostrarPergunta()
 }
 
 
+/* =====================================================
+UTILIDADES
+===================================================== */
 
 function embaralhar(array){
 return array.sort(()=>Math.random()-0.5)
 }
-
-
 
 function pegarIdPergunta(p){
 return p.votacao_id || p.id || p.votacao
 }
 
 
+/* =====================================================
+CONTROLE DE TIPO DE RESUMO
+Objetivo ou crítico
+===================================================== */
 
 function mudarResumo(tipo){
 
@@ -166,6 +196,9 @@ mostrarPergunta()
 }
 
 
+/* =====================================================
+RENDERIZAÇÃO DA PERGUNTA
+===================================================== */
 
 function mostrarPergunta(){
 
@@ -255,6 +288,9 @@ document.getElementById("placar-abst").innerText =
 }
 
 
+/* =====================================================
+REGISTRO DA RESPOSTA DO USUÁRIO
+===================================================== */
 
 function responder(voto){
 
@@ -295,6 +331,9 @@ document.getElementById("placar").style.display="block"
 }
 
 
+/* =====================================================
+CONTROLE DE NAVEGAÇÃO ENTRE PERGUNTAS
+===================================================== */
 
 function proximaPergunta(){
 
@@ -309,6 +348,10 @@ mostrarPergunta()
 }
 
 
+/* =====================================================
+CÁLCULO DE COMPATIBILIDADE
+Ranking de deputados e partidos
+===================================================== */
 
 function mostrarResultado(){
 
@@ -390,8 +433,6 @@ iguais:iguais
 
 }
 
-
-
 ranking.sort((a,b)=>b.score-a.score)
 
 rankingCompletoDeputados = ranking
@@ -403,6 +444,9 @@ let rankingAsc=[...ranking].sort((a,b)=>a.score-b.score)
 let bottom=rankingAsc.slice(0,5)
 
 
+/* =====================================================
+RENDERIZAÇÃO DO RANKING DE DEPUTADOS
+===================================================== */
 
 let lista=document.getElementById("ranking-deputados")
 lista.innerHTML=""
@@ -440,6 +484,9 @@ lista.appendChild(li)
 })
 
 
+/* =====================================================
+RENDERIZAÇÃO DOS MENOS COMPATÍVEIS
+===================================================== */
 
 let listaMenores=document.getElementById("ranking-deputados-menores")
 listaMenores.innerHTML=""
@@ -468,6 +515,9 @@ listaMenores.appendChild(li)
 })
 
 
+/* =====================================================
+CÁLCULO DO RANKING DE PARTIDOS
+===================================================== */
 
 let partidos={}
 
@@ -482,14 +532,10 @@ partidos[d.partido].total++
 
 })
 
-
-
 let rankingPartidos=[]
 
 let partidosNoBanco=Object.keys(bancadaPartidos).length
 let partidosValidos=0
-
-
 
 for(let p in partidos){
 
@@ -514,8 +560,6 @@ deputados:comparados
 
 }
 
-
-
 rankingPartidos.sort((a,b)=>b.score-a.score)
 
 rankingCompletoPartidos = rankingPartidos
@@ -527,6 +571,9 @@ let rankingPartidosAsc=[...rankingPartidos].sort((a,b)=>a.score-b.score)
 let bottomPartidos=rankingPartidosAsc.slice(0,5)
 
 
+/* =====================================================
+RENDERIZAÇÃO DO RANKING DE PARTIDOS
+===================================================== */
 
 let listaPartidos=document.getElementById("ranking-partidos")
 listaPartidos.innerHTML=""
@@ -560,7 +607,6 @@ listaPartidos.appendChild(li)
 })
 
 
-
 let listaPartidosMenores=document.getElementById("ranking-partidos-menores")
 listaPartidosMenores.innerHTML=""
 
@@ -585,6 +631,9 @@ listaPartidosMenores.appendChild(li)
 })
 
 
+/* =====================================================
+ESTATÍSTICAS DO QUIZ
+===================================================== */
 
 document.getElementById("estatisticas-quiz").innerHTML =
 `<b>📊 Estatísticas da análise</b><br><br>
@@ -598,6 +647,9 @@ Partidos com amostragem suficiente: ${partidosValidos}`
 }
 
 
+/* =====================================================
+RANKING COMPLETO
+===================================================== */
 
 function mostrarRankingCompletoPartidos(){
 
@@ -634,7 +686,6 @@ div.innerHTML=html
 }
 
 
-
 function mostrarRankingCompletoDeputados(){
 
 let div=document.getElementById("ranking-completo")
@@ -669,6 +720,11 @@ div.innerHTML=html
 
 }
 
+
+/* =====================================================
+COMPARTILHAR RESULTADO
+===================================================== */
+
 function compartilharResultado(){
 
 let encoded = btoa(JSON.stringify(respostasUsuario))
@@ -699,6 +755,10 @@ alert("Link copiado!")
 }
 
 
+/* =====================================================
+REINICIAR QUIZ
+===================================================== */
+
 function reiniciarQuiz(){
 
 indicePergunta=0
@@ -710,7 +770,17 @@ document.getElementById("header-inicial").style.display="block"
 
 }
 
+
+/* =====================================================
+EXECUÇÃO INICIAL
+===================================================== */
+
 carregarResultadoURL()
+
+
+/* =====================================================
+EXIBIR PROJETOS DE UM DEPUTADO
+===================================================== */
 
 function mostrarProjetosDeputado(nome){
 
