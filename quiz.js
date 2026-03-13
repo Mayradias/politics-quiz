@@ -154,7 +154,9 @@ localStorage.setItem(
 JSON.stringify([...usadas, ...novasUsadas])
 )
 
+setTimeout(()=>{
 mostrarPergunta()
+},300)
 
 }
 
