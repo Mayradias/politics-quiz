@@ -16,23 +16,25 @@ function carregarResultadoURL(){
 
 let params = new URLSearchParams(window.location.search)
 
-let r = params.get("r")
+let v = params.get("v")
 
-if(!r) return
+if(!v) return
 
 try{
 
-let dados = JSON.parse(atob(r))
+respostasUsuario = JSON.parse(atob(v))
 
-document.getElementById("menu-quiz").style.display="none"
-document.getElementById("header-inicial").style.display="none"
-document.getElementById("resultado").style.display="block"
+iniciarQuiz(Object.keys(respostasUsuario).length)
 
-renderRankingCompartilhado(dados)
+setTimeout(()=>{
+
+mostrarResultado()
+
+},500)
 
 }catch(e){
 
-console.log("Erro ao ler resultado")
+console.log("Erro ao carregar resultado")
 
 }
 
@@ -626,39 +628,22 @@ div.innerHTML=html
 
 }
 
-
 function compartilharResultado(){
 
-let dados = {
+let encoded = btoa(JSON.stringify(respostasUsuario))
 
-topDeputados: rankingCompletoDeputados.slice(0,5),
+let url = window.location.origin + "?v=" + encoded
 
-bottomDeputados: [...rankingCompletoDeputados]
-.sort((a,b)=>a.score-b.score)
-.slice(0,5),
+let texto = `Fiz um quiz com votações reais da Câmara.
 
-topPartidos: rankingCompletoPartidos.slice(0,5),
+Veja quais deputados votam como você:
 
-bottomPartidos: [...rankingCompletoPartidos]
-.sort((a,b)=>a.score-b.score)
-.slice(0,5)
-
-}
-
-let encoded = btoa(JSON.stringify(dados))
-
-let url = window.location.origin + "?r=" + encoded
-
-let texto = `Veja meu resultado no quiz de votações da Câmara:
-
-Descubra o seu também:
 ${url}`
-
 
 if(navigator.share){
 
 navigator.share({
-title:"Resultado do quiz político",
+title:"Quiz político da Câmara",
 text:texto,
 url:url
 })
@@ -666,7 +651,7 @@ url:url
 }else{
 
 navigator.clipboard.writeText(texto)
-alert("Resultado copiado!")
+alert("Link copiado!")
 
 }
 
