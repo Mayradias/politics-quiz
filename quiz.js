@@ -262,7 +262,7 @@ year:"numeric"
 })
 
 document.getElementById("data-votacao").innerText =
-"Data da votação: " + dataFormatada
+"Data do projeto: " + dataFormatada
 
 }
 
