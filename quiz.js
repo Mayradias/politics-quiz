@@ -715,7 +715,7 @@ function mostrarProjetosDeputado(nome){
 
 let container = document.getElementById("projetos-deputado")
 
-// limpar conteúdo anterior sempre
+// limpar conteúdo anterior
 container.innerHTML = ""
 
 let projetos = todasPerguntas.filter(p => p.autor === nome)
@@ -729,10 +729,9 @@ html += "<p>Nenhum projeto encontrado no banco do quiz.</p>"
 container.innerHTML = html
 
 return
-
 }
 
-// ordenar mais recentes primeiro (se tiver data)
+// pegar no máximo 5 projetos
 projetos = projetos.slice(0,5)
 
 projetos.forEach(p=>{
@@ -766,14 +765,6 @@ container.innerHTML = html
 container.scrollIntoView({
 behavior:"smooth",
 block:"start"
-})
-
-}
-
-document.getElementById("projetos-deputado").innerHTML = html
-
-document.getElementById("projetos-deputado").scrollIntoView({
-behavior:"smooth"
 })
 
 }
