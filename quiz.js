@@ -12,6 +12,68 @@ let tipoResumo = "critico"
 let rankingCompletoDeputados = []
 let rankingCompletoPartidos = []
 
+function carregarResultadoURL(){
+
+let params = new URLSearchParams(window.location.search)
+
+let r = params.get("r")
+
+if(!r) return
+
+try{
+
+let dados = JSON.parse(atob(r))
+
+document.getElementById("menu-quiz").style.display="none"
+document.getElementById("header-inicial").style.display="none"
+document.getElementById("resultado").style.display="block"
+
+renderRankingCompartilhado(dados)
+
+}catch(e){
+
+console.log("Erro ao ler resultado")
+
+}
+
+}
+
+function renderRankingCompartilhado(d){
+
+function gerarLista(lista){
+
+let html=""
+
+lista.forEach((x,i)=>{
+
+html+=`
+<li>
+${i+1}. ${x.nome || x.partido}
+${x.estado?`(${x.partido}-${x.estado})`:""}
+ — ${x.score}%
+</li>
+`
+
+})
+
+return html
+
+}
+
+document.getElementById("ranking-deputados").innerHTML =
+gerarLista(d.topDeputados)
+
+document.getElementById("ranking-deputados-menores").innerHTML =
+gerarLista(d.bottomDeputados)
+
+document.getElementById("ranking-partidos").innerHTML =
+gerarLista(d.topPartidos)
+
+document.getElementById("ranking-partidos-menores").innerHTML =
+gerarLista(d.bottomPartidos)
+
+}
+
 
 async function iniciarQuiz(qtd){
 
@@ -567,23 +629,44 @@ div.innerHTML=html
 
 function compartilharResultado(){
 
-let texto = `Descobri quais deputados mais votam como eu nas votações reais da Câmara.
+let dados = {
 
-Faça o quiz também: ${window.location.href}`
+topDeputados: rankingCompletoDeputados.slice(0,5),
+
+bottomDeputados: [...rankingCompletoDeputados]
+.sort((a,b)=>a.score-b.score)
+.slice(0,5),
+
+topPartidos: rankingCompletoPartidos.slice(0,5),
+
+bottomPartidos: [...rankingCompletoPartidos]
+.sort((a,b)=>a.score-b.score)
+.slice(0,5)
+
+}
+
+let encoded = btoa(JSON.stringify(dados))
+
+let url = window.location.origin + "?r=" + encoded
+
+let texto = `Veja meu resultado no quiz de votações da Câmara:
+
+Descubra o seu também:
+${url}`
+
 
 if(navigator.share){
 
 navigator.share({
-title: "Quiz político da Câmara",
-text: texto,
-url: window.location.href
+title:"Resultado do quiz político",
+text:texto,
+url:url
 })
 
 }else{
 
 navigator.clipboard.writeText(texto)
-
-alert("Link do quiz copiado para a área de transferência!")
+alert("Resultado copiado!")
 
 }
 
@@ -600,3 +683,5 @@ document.getElementById("menu-quiz").style.display="block"
 document.getElementById("header-inicial").style.display="block"
 
 }
+
+carregarResultadoURL()
