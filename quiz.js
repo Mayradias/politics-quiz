@@ -140,7 +140,6 @@ html += `<p>${f.trim()}.</p>`
 document.getElementById("contexto").innerHTML = html
 
 
-
 let total = p.sim + p.nao + p.abst
 
 let percSim = Math.round((p.sim/total)*100)
@@ -148,14 +147,13 @@ let percNao = Math.round((p.nao/total)*100)
 let percAbst = Math.round((p.abst/total)*100)
 
 document.getElementById("placar-sim").innerText =
-`A favor: ${percSim}%`
+`A favor: ${percSim}% (${p.sim} deputados)`
 
 document.getElementById("placar-nao").innerText =
-`Contra: ${percNao}%`
+`Contra: ${percNao}% (${p.nao} deputados)`
 
 document.getElementById("placar-abst").innerText =
-`Abstenção: ${percAbst}%`
-
+`Abstenção: ${percAbst}% (${p.abst} deputados)`
 }
 
 
