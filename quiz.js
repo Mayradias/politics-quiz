@@ -250,6 +250,22 @@ document.getElementById("link-integra").href = p.url_integra
 document.getElementById("votacao-id").innerText =
 "ID: " + pegarIdPergunta(p)
 
+if(p.data){
+
+let data = new Date(p.data)
+
+let dataFormatada =
+data.toLocaleDateString("pt-BR",{
+day:"2-digit",
+month:"2-digit",
+year:"numeric"
+})
+
+document.getElementById("data-votacao").innerText =
+"Data da votação: " + dataFormatada
+
+}
+
 document.getElementById("contador").innerText =
 `Pergunta ${indicePergunta+1} de ${totalPerguntas}`
 
