@@ -138,8 +138,8 @@ console.log("Deputados carregados:", Object.keys(votosDeputados).length)
 // pegar histórico de perguntas já usadas
 let usadas = JSON.parse(localStorage.getItem("perguntasUsadas") || "[]")
 
-// pegar top 30 perguntas mais divergentes
-let topPerguntas = perguntas.slice(0,30)
+// pegar top 50 perguntas mais divergentes
+let topPerguntas = perguntas.slice(0,50)
 
 // filtrar perguntas que ainda não foram usadas
 let disponiveis = topPerguntas.filter(p => !usadas.includes(p.id))
