@@ -86,8 +86,8 @@ document.getElementById("menu-quiz").style.display="none"
 document.getElementById("header-inicial").style.display="none"
 document.getElementById("quiz").style.display="flex"
 
-perguntas = await fetch("data/8_perguntas.json").then(r=>r.json())
 todasPerguntas = await fetch("data/8_perguntas.json").then(r=>r.json())
+perguntas = [...todasPerguntas]
 
 perguntas = [...todasPerguntas]
 votosDeputados = await fetch("data/9_votos_deputados.json").then(r=>r.json())
@@ -419,7 +419,11 @@ li.classList.add("primeiro-lugar")
 }
 
 li.innerHTML = `
-${medalha} ${d.nome} (${d.partido}-${d.estado}) — ${d.score}%
+${medalha} 
+<span class="nome-deputado" onclick="mostrarProjetosDeputado('${d.nome}')">
+${d.nome}
+</span>
+(${d.partido}-${d.estado}) — ${d.score}%
 
 <div class="barra-compat">
 <div class="barra-compat-interna" style="width:${d.score}%"></div>
