@@ -713,26 +713,31 @@ carregarResultadoURL()
 
 function mostrarProjetosDeputado(nome){
 
+let container = document.getElementById("projetos-deputado")
+
+// limpar conteúdo anterior sempre
+container.innerHTML = ""
+
 let projetos = todasPerguntas.filter(p => p.autor === nome)
+
+let html = `<h3>Projetos de ${nome}</h3>`
 
 if(projetos.length === 0){
 
-document.getElementById("projetos-deputado").innerHTML =
-"<p>Nenhum projeto encontrado.</p>"
+html += "<p>Nenhum projeto encontrado no banco do quiz.</p>"
+
+container.innerHTML = html
 
 return
 
 }
 
-projetos.sort((a,b)=> new Date(b.data) - new Date(a.data))
-
+// ordenar mais recentes primeiro (se tiver data)
 projetos = projetos.slice(0,5)
-
-let html = `<h3>Projetos de ${nome}</h3>`
 
 projetos.forEach(p=>{
 
-let resumo = p.resumo_objetivo
+let resumo = p.resumo_objetivo || ""
 
 if(resumo.length > 140){
 resumo = resumo.slice(0,140) + "..."
@@ -742,7 +747,7 @@ html += `
 
 <div class="projeto-item">
 
-<b>${p.tipo} ${p.numero}/${p.ano}</b> — ${resumo}
+<b>${p.id}</b> — ${resumo}
 
 <br>
 
@@ -755,6 +760,15 @@ Ler íntegra
 `
 
 })
+
+container.innerHTML = html
+
+container.scrollIntoView({
+behavior:"smooth",
+block:"start"
+})
+
+}
 
 document.getElementById("projetos-deputado").innerHTML = html
 
