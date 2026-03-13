@@ -91,9 +91,38 @@ votosDeputados = await fetch("data/9_votos_deputados.json").then(r=>r.json())
 console.log("Perguntas carregadas:", perguntas.length)
 console.log("Deputados carregados:", Object.keys(votosDeputados).length)
 
-perguntas = embaralhar(perguntas)
+// pegar histórico de perguntas já usadas
+let usadas = JSON.parse(localStorage.getItem("perguntasUsadas") || "[]")
 
-perguntas = perguntas.slice(0,totalPerguntas)
+// pegar top 30 perguntas mais divergentes
+let topPerguntas = perguntas.slice(0,30)
+
+// filtrar perguntas que ainda não foram usadas
+let disponiveis = topPerguntas.filter(p => !usadas.includes(p.id))
+
+// se acabaram as perguntas, resetar histórico
+if(disponiveis.length < totalPerguntas){
+
+localStorage.removeItem("perguntasUsadas")
+
+usadas = []
+disponiveis = topPerguntas
+
+}
+
+// embaralhar disponíveis
+disponiveis = embaralhar(disponiveis)
+
+// selecionar perguntas do quiz
+perguntas = disponiveis.slice(0,totalPerguntas)
+
+// salvar perguntas usadas
+let novasUsadas = perguntas.map(p => p.id)
+
+localStorage.setItem(
+"perguntasUsadas",
+JSON.stringify([...usadas, ...novasUsadas])
+)
 
 mostrarPergunta()
 
