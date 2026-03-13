@@ -565,6 +565,30 @@ div.innerHTML=html
 }
 
 
+function compartilharResultado(){
+
+let texto = `Descobri quais deputados mais votam como eu nas votações reais da Câmara.
+
+Faça o quiz também: ${window.location.href}`
+
+if(navigator.share){
+
+navigator.share({
+title: "Quiz político da Câmara",
+text: texto,
+url: window.location.href
+})
+
+}else{
+
+navigator.clipboard.writeText(texto)
+
+alert("Link do quiz copiado para a área de transferência!")
+
+}
+
+}
+
 
 function reiniciarQuiz(){
 
