@@ -607,7 +607,11 @@ li.classList.add("primeiro-lugar")
 }
 
 li.innerHTML = `
-${medalha} ${p.partido} — ${p.score}%
+${medalha} 
+<span class="nome-partido" onclick="mostrarProjetosPartido('${p.partido}')">
+${p.partido}
+</span>
+ — ${p.score}%
 
 <div class="barra-compat">
 <div class="barra-compat-interna" style="width:${p.score}%"></div>
@@ -631,7 +635,10 @@ bottomPartidos.forEach(p=>{
 let li=document.createElement("li")
 
 li.innerHTML = `
-${p.partido} — ${p.score}%
+<span class="nome-partido" onclick="mostrarProjetosPartido('${p.partido}')">
+${p.partido}
+</span>
+ — ${p.score}%
 
 <div class="barra-compat">
 <div class="barra-compat-interna" style="width:${p.score}%"></div>
@@ -847,6 +854,80 @@ let resumo = p.resumo_objetivo || ""
 if(resumo.length > 140){
 resumo = resumo.slice(0,140) + "..."
 }
+
+html += `
+
+<div class="projeto-item">
+
+<b>${p.tipo} ${p.numero} - ${p.ano}</b>
+
+<br>
+
+${resumo}
+
+<br>
+
+<a href="${p.url_integra}" target="_blank">
+Ler íntegra
+</a>
+
+</div>
+
+`
+
+})
+
+container.innerHTML = html
+
+container.scrollIntoView({
+behavior:"smooth",
+block:"start"
+})
+
+}
+
+function mostrarProjetosPartido(partido){
+
+let container = document.getElementById("projetos-deputado-mais")
+
+document.getElementById("projetos-deputado-mais").innerHTML=""
+document.getElementById("projetos-deputado-menos").innerHTML=""
+
+let deputados = []
+
+for(let dep in votosDeputados){
+if(votosDeputados[dep].partido === partido){
+deputados.push(dep)
+}
+}
+
+let projetos = todosProjetos.filter(p => {
+
+let autor = p.autor
+
+if(autor.includes(" - ")){
+autor = autor.split(" - ")[1]
+}
+
+return deputados.includes(autor)
+
+})
+
+let html = `<h3>Projetos de deputados do ${partido}</h3>`
+
+if(projetos.length === 0){
+
+html += "<p>Nenhum projeto encontrado no banco do quiz.</p>"
+
+container.innerHTML = html
+return
+}
+
+projetos = projetos.slice(0,5)
+
+projetos.forEach(p=>{
+
+let resumo = p.resumo_objetivo || ""
 
 html += `
 
