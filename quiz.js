@@ -608,7 +608,7 @@ li.classList.add("primeiro-lugar")
 
 li.innerHTML = `
 ${medalha} 
-<span class="nome-partido" onclick="mostrarProjetosPartido('${p.partido}')">
+<span class="nome-partido" onclick="mostrarProjetosPartido('${p.partido}','mais')">
 ${p.partido}
 </span>
  — ${p.score}%
@@ -635,7 +635,7 @@ bottomPartidos.forEach(p=>{
 let li=document.createElement("li")
 
 li.innerHTML = `
-<span class="nome-partido" onclick="mostrarProjetosPartido('${p.partido}')">
+<span class="nome-partido" onclick="mostrarProjetosPartido('${p.partido}','menos')">
 ${p.partido}
 </span>
  — ${p.score}%
@@ -886,12 +886,18 @@ block:"start"
 
 }
 
-function mostrarProjetosPartido(partido){
+function mostrarProjetosPartido(partido,tipo){
 
-let container = document.getElementById("projetos-deputado-mais")
+let container
 
-document.getElementById("projetos-deputado-mais").innerHTML=""
-document.getElementById("projetos-deputado-menos").innerHTML=""
+if(tipo==="mais"){
+container = document.getElementById("projetos-partido-mais")
+}else{
+container = document.getElementById("projetos-partido-menos")
+}
+
+document.getElementById("projetos-partido-mais").innerHTML=""
+document.getElementById("projetos-partido-menos").innerHTML=""
 
 let deputados = []
 
