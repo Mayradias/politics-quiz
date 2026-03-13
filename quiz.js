@@ -842,7 +842,11 @@ html += `
 
 <div class="projeto-item">
 
-<b>${p.id}</b> — ${resumo}
+<b>${p.tipo} ${p.numero} - ${p.ano}</b>
+
+<br>
+
+${resumo}
 
 <br>
 
