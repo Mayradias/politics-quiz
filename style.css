@@ -527,8 +527,13 @@ color:#2563eb;
 
 }
 
-.nome-deputado:hover{
+.nome-deputado{
+cursor:pointer;
+}
 
-text-decoration:underline;
-
+.botoes-resultado{
+display:flex;
+gap:12px;
+justify-content:center;
+flex-wrap:wrap;
 }
