@@ -1,4 +1,5 @@
 let perguntas = []
+let todasPerguntas = []
 let votosDeputados = {}
 
 let indicePergunta = 0
@@ -86,6 +87,9 @@ document.getElementById("header-inicial").style.display="none"
 document.getElementById("quiz").style.display="flex"
 
 perguntas = await fetch("data/8_perguntas.json").then(r=>r.json())
+todasPerguntas = await fetch("data/8_perguntas.json").then(r=>r.json())
+
+perguntas = [...todasPerguntas]
 votosDeputados = await fetch("data/9_votos_deputados.json").then(r=>r.json())
 
 console.log("Perguntas carregadas:", perguntas.length)
@@ -440,7 +444,10 @@ bottom.forEach(d=>{
 let li=document.createElement("li")
 
 li.innerHTML = `
-${d.nome} (${d.partido}-${d.estado}) — ${d.score}%
+<span class="nome-deputado" onclick="mostrarProjetosDeputado('${d.nome}')">
+${d.nome}
+</span>
+(${d.partido}-${d.estado}) — ${d.score}%
 
 <div class="barra-compat">
 <div class="barra-compat-interna" style="width:${d.score}%"></div>
@@ -699,3 +706,56 @@ document.getElementById("header-inicial").style.display="block"
 }
 
 carregarResultadoURL()
+
+function mostrarProjetosDeputado(nome){
+
+let projetos = todasPerguntas.filter(p => p.autor === nome)
+
+if(projetos.length === 0){
+
+document.getElementById("projetos-deputado").innerHTML =
+"<p>Nenhum projeto encontrado.</p>"
+
+return
+
+}
+
+projetos.sort((a,b)=> new Date(b.data) - new Date(a.data))
+
+projetos = projetos.slice(0,5)
+
+let html = `<h3>Projetos de ${nome}</h3>`
+
+projetos.forEach(p=>{
+
+let resumo = p.resumo_objetivo
+
+if(resumo.length > 140){
+resumo = resumo.slice(0,140) + "..."
+}
+
+html += `
+
+<div class="projeto-item">
+
+<b>${p.tipo} ${p.numero}/${p.ano}</b> — ${resumo}
+
+<br>
+
+<a href="${p.url_integra}" target="_blank">
+Ler íntegra
+</a>
+
+</div>
+
+`
+
+})
+
+document.getElementById("projetos-deputado").innerHTML = html
+
+document.getElementById("projetos-deputado").scrollIntoView({
+behavior:"smooth"
+})
+
+}
