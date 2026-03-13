@@ -632,7 +632,7 @@ function compartilharResultado(){
 
 let encoded = btoa(JSON.stringify(respostasUsuario))
 
-let url = window.location.origin + "?v=" + encoded
+let url = window.location.origin + window.location.pathname + "?v=" + encoded
 
 let texto = `Fiz um quiz com votações reais da Câmara.
 
